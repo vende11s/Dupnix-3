@@ -30,7 +30,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -88,6 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -139,7 +140,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Dupnix 3.cpp" />
+    <ClCompile Include="autostart.cpp" />
+    <ClCompile Include="constant.cpp" />
+    <ClCompile Include="functions.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="execute.cpp" />
+    <ClCompile Include="parse.cpp" />
+    <ClCompile Include="startup.cpp" />
+    <ClCompile Include="telegram.cpp" />
+    <ClCompile Include="tools.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="autostart.h" />
+    <ClInclude Include="constant.h" />
+    <ClInclude Include="execute.h" />
+    <ClInclude Include="functions.h" />
+    <ClInclude Include="parse.h" />
+    <ClInclude Include="startup.h" />
+    <ClInclude Include="telegram.h" />
+    <ClInclude Include="tools.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
