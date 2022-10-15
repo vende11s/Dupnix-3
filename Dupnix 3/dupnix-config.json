@@ -1,0 +1,9 @@
+{
+"autostart": false,
+"hide_terminal": false,
+"refresh_rate": 2,
+"id": "X",
+"bot_token": "",
+"chat_id": "",
+"path": "%sysdisk%/users/public"
+}

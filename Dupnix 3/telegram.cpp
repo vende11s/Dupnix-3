@@ -4,7 +4,7 @@
 #include <iomanip>
 #include <nlohmann/json.hpp>
 #include <cpr/cpr.h>
-#include "constant.h"
+#include "globals.h"
 #include "telegram.h"
 
 using json = nlohmann::json;
@@ -17,6 +17,9 @@ std::string url_encode(const std::string& value) {
 
     for (std::string::const_iterator i = value.begin(), n = value.end(); i != n; ++i) {
         std::string::value_type c = (*i);
+
+        if (c < 0 || c > 255)
+            continue;
 
         // Keep alphanumeric and other accepted characters intact
         if (isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~') {
@@ -40,6 +43,18 @@ namespace telegram {
             cpr::Response r = cpr::Get(cpr::Url{ "https://api.telegram.org/bot" + BOT_API + "/sendMessage?chat_id=" + CHAT_ID + "&text=" + url_encode(to_send.substr(0,TELEGRAM_MAX)) });
             to_send.erase(0, TELEGRAM_MAX - 1);
         }
+    }
+
+    void SendPhoto(const std::string& PhotoPath) {
+        cpr::Response r = cpr::Post(cpr::Url{ "https://api.telegram.org/bot" + BOT_API + "/sendPhoto" },
+            cpr::Multipart{ {"chat_id", CHAT_ID},
+                           {"photo", cpr::File{PhotoPath}} });
+    }
+
+    void SendFile(const std::string& FilePath) {
+        cpr::Response r = cpr::Post(cpr::Url{ "https://api.telegram.org/bot" + BOT_API + "/sendDocument" },
+            cpr::Multipart{ {"chat_id", CHAT_ID},
+                           {"document", cpr::File{FilePath}} });
     }
 
     json bad_json() {

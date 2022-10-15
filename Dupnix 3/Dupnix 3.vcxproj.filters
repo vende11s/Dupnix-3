@@ -27,7 +27,7 @@
     <ClCompile Include="startup.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="constant.cpp">
+    <ClCompile Include="globals.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
     <ClCompile Include="autostart.cpp">
@@ -47,7 +47,7 @@
     <ClInclude Include="execute.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="constant.h">
+    <ClInclude Include="globals.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="telegram.h">
@@ -68,5 +68,13 @@
     <ClInclude Include="functions.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dupnix-config.json">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="README.md">
+      <Filter>Pliki zasobów</Filter>
+    </None>
   </ItemGroup>
 </Project>

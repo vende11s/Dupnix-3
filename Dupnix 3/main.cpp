@@ -1,7 +1,7 @@
 ﻿#include <iostream>
 #include <nlohmann/json.hpp>
 #include <cpr/cpr.h>
-#include "constant.h"
+#include "globals.h"
 #include "startup.h"
 #include "telegram.h"
 #include "parse.h"
