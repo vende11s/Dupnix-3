@@ -33,7 +33,7 @@ Dupnix communicates to you through telegram, so nobody can detect who's on the o
 - go to `https://api.telegram.org/bot<api Token>/getUpdates` 
 - Find the `"id":` number, that's ur `chat_id`
 ### Json
-- You need to create a json file, [dupnix-config.json]("Dupnix%203/dupnix-config.json") is a template
+- You need to create a json file, [dupnix-config.json](Dupnix%203/dupnix-config.json) is a template
     - `autostart <true/false>` automatically installs the Dupnix and runs it every pc boot
     - `hide_terminal <true/false>` who would expect that it hides the terminal?
     - `refresh_rate <seconds>` how often Dupnix checks if you sent some message
