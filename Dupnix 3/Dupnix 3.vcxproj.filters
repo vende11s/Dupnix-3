@@ -73,8 +73,5 @@
     <None Include="dupnix-config.json">
       <Filter>Pliki zasobów</Filter>
     </None>
-    <None Include="README.md">
-      <Filter>Pliki zasobów</Filter>
-    </None>
   </ItemGroup>
 </Project>

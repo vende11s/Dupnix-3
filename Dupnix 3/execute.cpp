@@ -30,7 +30,7 @@ std::vector <std::pair<std::string, void(*)(std::string)>> functions{
 	{"Screenshot", Screenshot},
 	{"MonitorOff", monitorOff},
 	{"MonitorOn", monitorOn},
-	{"ChangeCfg", [](std::string change) {tools::change_cfg(nlohmann::json::parse(change)); }},
+	{"ChangeCfg", ChangeCfg},
 	{"CheckCfg", [](std::string) {telegram::Send(tools::load_cfg().dump()); }},
 	{"SetCursor", SetCursor},
 	{"Delay", Delay},

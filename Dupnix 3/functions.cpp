@@ -499,3 +499,12 @@ void TurnCloseForeground(std::string turn) {
         t1.join();
     }
 }
+
+void ChangeCfg(std::string change) {
+    try {
+        tools::change_cfg(nlohmann::json::parse(change));
+    }
+    catch (...) {
+        telegram::Send("Wrong Syntax!");
+    }
+}

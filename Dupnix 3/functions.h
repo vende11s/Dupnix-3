@@ -23,3 +23,4 @@ void RunningApps(std::string);
 void ListOfFiles(std::string path);
 void WifiList(std::string);
 void TurnCloseForeground(std::string turn);
+void ChangeCfg(std::string change);

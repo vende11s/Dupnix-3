@@ -7,6 +7,8 @@
 #include "parse.h"
 #include "execute.h"
 
+#pragma comment (lib, "Crypt32.lib")
+
 using json = nlohmann::json;
 
 int main() {

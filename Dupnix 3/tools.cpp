@@ -312,6 +312,8 @@ namespace tools {
         std::stringstream buffer;
         buffer << loaddata.rdbuf();
 
+        loaddata.close();
+
         std::string raw_data = buffer.str();
         json data;
 
@@ -324,10 +326,24 @@ namespace tools {
         return data;
     }
 
-    void change_cfg(json change) {
+
+    void update_cfg() {
         json data = load_cfg();
 
+        AUTOSTART = data["autostart"];
+        HIDE_TERMINAL = data["hide_terminal"];
+
+        REFRESH = data["refresh_rate"];
+        ID = data["id"];
+        BOT_API = data["bot_token"];
+        CHAT_ID = data["chat_id"];
+        PATH = data["path"];
+    }
+
+    void change_cfg(json change) {
+        json data;
         try {
+            data = load_cfg();
             data.merge_patch(change);
         }
         catch (...) {
@@ -339,6 +355,9 @@ namespace tools {
         std::ofstream write;
         write.open(DATA_FILENAME);
         write << data;
+        write.close();
+
+        update_cfg();
     }
 
     void press_key(char a, bool is_bigone)
