@@ -9,16 +9,16 @@ Dupnix 3 is a **backdoor** you can use to gain control on a pc, troll sb, do a l
 Dupnix communicates to you through telegram, so nobody can detect who's on the other side.
 
 ## Contents
-- [Instalation](##Instalation)
-    - [Telegram](###Telegram)
-    - [Installation on victim pc](###Instalation-on-victim's-pc)
-- [Usage](##Usage)
-    - [Syntax](###Syntax)
-    - [Commands](###Commands)
-- [Todo](##Todo)
-- [Contribution](##Contribution)
-- [Why Dupnix 3?](##Why-Dupnix-3?)
-- [Disclaimer](##Disclaimer)
+- [Instalation](#Instalation)
+    - [Telegram](#Telegram)
+    - [Installation on victim pc](#Instalation-on-victim's-pc)
+- [Usage](#Usage)
+    - [Syntax](#Syntax)
+    - [Commands](#Commands)
+- [Todo](#Todo)
+- [Contribution](#Contribution)
+- [Why Dupnix 3?](#Why-Dupnix-3?)
+- [Disclaimer](#Disclaimer)
 
 ## Instalation
 ### Telegram
