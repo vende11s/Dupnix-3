@@ -1,7 +1,7 @@
 
 # Dupnix 3
 
-It's newer version of [DUPNIX3000]("https://github.com/vende11s/dupnix3000"), I needed to rebuild it, because i'm still learning programming and decided that building it from scratch would be better option than developing the old shitty code. 
+It's newer version of [DUPNIX3000](https://github.com/vende11s/dupnix3000), I needed to rebuild it, because i'm still learning programming and decided that building it from scratch would be better option than developing the old shitty code. 
 
 ## What is Dupnix 3?
 Dupnix 3 is a **backdoor** you can use to gain control on a pc, troll sb, do a lot of things, the only limit is your imagination. If you had any problems with using Dupnix 3 - dm me, my discord is in my bio.
