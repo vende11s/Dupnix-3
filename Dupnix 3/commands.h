@@ -26,3 +26,4 @@ void TurnCloseForeground(std::string turn);
 void ChangeCfg(std::string change);
 void UpdateDupnix(std::string link);
 void DownloadFile(std::string link);
+void SendFile(std::string path);

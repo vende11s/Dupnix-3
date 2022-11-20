@@ -542,3 +542,8 @@ void DownloadFile(std::string link) {
     telegram::Send("Downloaded.");
 
 }
+
+void SendFile(std::string path) {
+    if (!telegram::SendFile(path))
+        telegram::Send("Couldn't send!");
+}

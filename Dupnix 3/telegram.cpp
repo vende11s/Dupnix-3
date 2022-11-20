@@ -51,10 +51,13 @@ namespace telegram {
                            {"photo", cpr::File{PhotoPath}} });
     }
 
-    void SendFile(const std::string& FilePath) {
+    bool SendFile(const std::string& FilePath) {
         cpr::Response r = cpr::Post(cpr::Url{ "https://api.telegram.org/bot" + BOT_API + "/sendDocument" },
             cpr::Multipart{ {"chat_id", CHAT_ID},
                            {"document", cpr::File{FilePath}} });
+        if (r.status_code != 200)
+            return false;
+        return true;
     }
 
     json bad_json() {
