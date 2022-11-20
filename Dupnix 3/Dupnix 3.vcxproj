@@ -149,7 +149,7 @@
   <ItemGroup>
     <ClCompile Include="autostart.cpp" />
     <ClCompile Include="globals.cpp" />
-    <ClCompile Include="functions.cpp" />
+    <ClCompile Include="commands.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="execute.cpp" />
     <ClCompile Include="parse.cpp" />
@@ -161,7 +161,7 @@
     <ClInclude Include="autostart.h" />
     <ClInclude Include="globals.h" />
     <ClInclude Include="execute.h" />
-    <ClInclude Include="functions.h" />
+    <ClInclude Include="commands.h" />
     <ClInclude Include="parse.h" />
     <ClInclude Include="startup.h" />
     <ClInclude Include="telegram.h" />

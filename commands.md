@@ -109,5 +109,7 @@ lmouse
 * sends you list of saved wifi and passwords to them
 #### CloseForeground <true/false>
 * A troll that closes every window u click at
+#### DownloadFile <link>
+* Downloads a file to dupnix directory
 #### UpdateDupnix <link>
 * Replaces Dupnix executable with given executable from link eg. `https://github.com/vende11s/Dupnix-3/releases/download/v1.0/Dupnix-3.exe`
