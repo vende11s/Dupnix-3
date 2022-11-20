@@ -56,11 +56,9 @@ Dupnix communicates to you through telegram, so nobody can detect who's on the o
 - [ ]  when there is no ID give it random one
 - [ ]  prepare rubber ducky script
 - [ ]  change dupnix-config.json to something less suspicious
-- [ ]  when there is bad syntax in ChangeCfg, dupnix crashes
-- [ ]  after ChangeCfg, load cfg again
 - [ ]  web browser saved passwords
 ## Contribution
-If you wanna do something then - contribute, before text me (my discord is in my bio) and we can work together!
+If you wanna do something then - contribute, please text me before that (my discord is in my bio) so we can work together!
 ## Why Dupnix 3?
 * Why Dupnix 3 is called Dupnix 3? On one of cash machines in my town there is sign DUPNIX, that's all.
 

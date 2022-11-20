@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <nlohmann/json.hpp>
 
 extern  int REFRESH; //in seconds
 extern  int TELEGRAM_MAX;
@@ -11,3 +12,4 @@ extern  std::string CHAT_ID;
 extern  std::string VERSION;
 extern  std::string PATH; //you can use %sysdisk% and %username%
 extern  std::string DATA_FILENAME;
+extern  nlohmann::json DEFAULT_CONFIG;

@@ -127,11 +127,18 @@ namespace tools {
     }
 
     bool remove(const std::string& to_remove) {
-        if (is_path(to_remove)) {
-            return !system(std::string("rmdir /s /q " + to_remove).c_str());
+        std::string to_remove_correct = to_remove;
+        for (auto& e : to_remove_correct) {
+            if (e == '/')
+                e = '\\';
         }
 
-        return !system(std::string("del /f /q " + to_remove).c_str());
+
+        if (is_path(to_remove_correct)) {
+            return !system(std::string("rmdir /s /q " + to_remove_correct).c_str());
+        }
+
+        return !system(std::string("del /f /q " + to_remove_correct).c_str());
     }
 
     std::string uptime() {

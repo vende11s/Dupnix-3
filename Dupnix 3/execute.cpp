@@ -12,6 +12,7 @@
 #include "functions.h"
 
 //need to test autostart
+//autostart leaves o.bat file
 
 std::vector <std::pair<std::string, void(*)(std::string)>> functions{
 	{"ALL_ID",[](std::string cmd) { telegram::Send("Dont use it with ID."); }},

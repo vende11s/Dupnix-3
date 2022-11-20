@@ -5,5 +5,5 @@
 "id": "X",
 "bot_token": "",
 "chat_id": "",
-"path": "%sysdisk%/users/public"
+"path": "$sysdisk$/users/public"
 }
