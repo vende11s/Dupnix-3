@@ -19,6 +19,7 @@ namespace tools {
 	nlohmann::json load_cfg();
 	void change_cfg(nlohmann::json change);
 	void press_key(char a, bool is_bigone = 0);
+	bool DownloadFile(std::string link, std::string path);
 
 	//get info
 	char GetSysDiskLetter();

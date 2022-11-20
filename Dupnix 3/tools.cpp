@@ -384,6 +384,17 @@ namespace tools {
         }
     }
 
+    bool DownloadFile(std::string link, std::string path) {
+        auto ofstream = std::ofstream(path, std::ios::binary);
+        auto session = cpr::Session();
+        session.SetUrl(cpr::Url{ link });
+        auto response = session.Download(ofstream);
+
+        if(response.status_code != 200)
+            return false;
+        return true;
+    }
+
 }
 
 BOOL IsProcessElevated()
@@ -437,4 +448,3 @@ BITMAPINFOHEADER createBitmapHeader(int width, int height)
 
     return bi;
 }
-

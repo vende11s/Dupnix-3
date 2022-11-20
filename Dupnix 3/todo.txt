@@ -1,0 +1,3 @@
+send files from path
+return green circle or bad circle if function is good or bad
+automatically send files from pendrive

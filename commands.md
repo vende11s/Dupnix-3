@@ -59,7 +59,7 @@ version: v0.1
 #### WriteToClipboard <text>
 * Puts some text to clipboard
 #### Press <text>
-* Writes on clipboard some text
+* Works like BadUsb's STRING, just writes some text like it was user clicking keyboard
 example:
 `<ID> Press JDJD`
 #### Hotkey <hotkey>
@@ -109,3 +109,5 @@ lmouse
 * sends you list of saved wifi and passwords to them
 #### CloseForeground <true/false>
 * A troll that closes every window u click at
+#### UpdateDupnix <link>
+* Replaces Dupnix executable with given executable from link eg. `https://github.com/vende11s/Dupnix-3/releases/download/v1.0/Dupnix-3.exe`

