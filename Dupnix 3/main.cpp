@@ -14,7 +14,6 @@ using json = nlohmann::json;
 int main() {
 	startup();
 	int LastMessageId = -1;
-
 	while (true) {
 		Sleep(REFRESH * 1000);
 		json message = telegram::GetLastMessage();
@@ -28,7 +27,7 @@ int main() {
 
 		if (message["text"] == "ALL_ID") {
 			std::cout << "ALL_ID\n";
-			telegram::Send(ID);
+			telegram::SendText(ID);
 			continue;
 		}
 

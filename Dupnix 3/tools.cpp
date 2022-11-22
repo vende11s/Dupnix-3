@@ -355,7 +355,7 @@ namespace tools {
         }
         catch (...) {
             std::cout << "couldn't change config file";
-            telegram::Send("couldn't change config file");
+            telegram::SendText("couldn't change config file");
             return;
         }
 

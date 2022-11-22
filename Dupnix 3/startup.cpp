@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <Windows.h>
+#include <filesystem>
 #include <nlohmann/json.hpp>
 #include "tools.h"
 #include "startup.h"
@@ -41,7 +42,17 @@ void load_data() {
 }
 
 void startup() {
-	load_data();
+
+	std::filesystem::current_path(tools::get_path().substr(0, tools::get_path().size() - tools::get_exe().size()));
+	try {
+		load_data();
+	}
+	catch(...){
+		std::cerr << "couldn't parse config file\n";
+		exit(1);
+	}
+
+
 	if (HIDE_TERMINAL)
 		ShowWindow(::GetConsoleWindow(), SW_HIDE);
 	if (AUTOSTART)
@@ -49,6 +60,6 @@ void startup() {
 
 	logo();
 
-	telegram::Send(ID + " is running");
+	telegram::SendText(ID + " is running");
 	std::cout << "\nID: " + ID << std::endl;
 }

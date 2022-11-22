@@ -37,7 +37,7 @@ std::string url_encode(const std::string& value) {
 }
 
 namespace telegram {
-    void Send(const std::string& send) {
+    void SendText(const std::string& send) {
         std::string to_send = send;
         while (!to_send.empty()) {
             cpr::Response r = cpr::Get(cpr::Url{ "https://api.telegram.org/bot" + BOT_API + "/sendMessage?chat_id=" + CHAT_ID + "&text=" + url_encode(to_send.substr(0,TELEGRAM_MAX)) });
@@ -94,7 +94,7 @@ namespace telegram {
             std::cerr << "raw message: " << raw_response << std::endl;
         #endif
             if (!error) 
-                Send(ID + " something went wrong with parsing to json");
+                SendText(ID + " something went wrong with parsing to json");
             error = true;
 
             return bad_json();

