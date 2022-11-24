@@ -25,8 +25,8 @@ void printLogo() {
 		<< "             |_|                       ";
 }
 
-void load_data() {
-	json data = tools::load_cfg();
+void loadData() {
+	json data = tools::info::loadCfg();
 
 	try {
 		AUTOSTART = data["autostart"];
@@ -44,9 +44,11 @@ void load_data() {
 }
 
 void startup() {
-	std::filesystem::current_path(tools::get_path().substr(0, tools::get_path().size() - tools::get_exe().size()));  // cd to the folder dupnix is inside
+	// cd to the folder dupnix is inside
+	std::filesystem::current_path(tools::info::getDupnixPath().substr(0, tools::info::getDupnixPath().size() - tools::info::getExeName().size()));
+
 	try {
-		load_data();
+		loadData();
 	}
 	catch(...) {
 		std::cerr << "couldn't parse config file\n";

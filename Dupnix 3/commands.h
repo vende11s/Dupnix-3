@@ -2,15 +2,15 @@
 #include <string>
 
 void getStatus(std::string);
-void setID(std::string newID);
+void setID(std::string new_ID);
 void setVolume(std::string value);
-void Screenshot(std::string highquality);
+void Screenshot(std::string);
 void monitorOff(std::string);
 void monitorOn(std::string);
 void SetCursor(std::string cords);
 void Delay(std::string delay);
 void BlockCursor(std::string time);
-void BlockClipboard(std::string yesornot);
+void BlockClipboard(std::string yes_or_not);
 void Press(std::string to_press);
 void hotkeys(std::string hotkey);
 void SendClipboard(std::string);

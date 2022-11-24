@@ -15,7 +15,7 @@ namespace parse {
 			if (it == 0)
 				output.ID += raw_text[i];
 			if (it == 1)
-				output.function += raw_text[i];
+				output.command += raw_text[i];
 			if (it > 1)
 				output.parameters += raw_text[i];
 		}

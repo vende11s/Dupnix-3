@@ -4,9 +4,9 @@
 
 namespace telegram {
 	void SendText(const std::string& send);
-	void SendPhoto(const std::string& PhotoPath);
-	bool SendFile(const std::string& FilePath);
+	void SendPhoto(const std::string& photo_path);
+	bool SendFile(const std::string& file_path);
 
-	nlohmann::json bad_json();
+	nlohmann::json badJson();
 	nlohmann::json GetLastMessage();
 }

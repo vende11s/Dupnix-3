@@ -39,30 +39,30 @@ std::string url_encode(const std::string& value) {
 }
 
 namespace telegram {
-    void SendText(const std::string& send) {
-        std::string to_send = send;
+    void SendText(const std::string& message) {
+        std::string to_send = message;
         while (!to_send.empty()) {
             cpr::Response r = cpr::Get(cpr::Url{ "https://api.telegram.org/bot" + BOT_API + "/sendMessage?chat_id=" + CHAT_ID + "&text=" + url_encode(to_send.substr(0, TELEGRAM_MAX)) });
             to_send.erase(0, TELEGRAM_MAX - 1);
         }
     }
 
-    void SendPhoto(const std::string& PhotoPath) {
+    void SendPhoto(const std::string& photo_path) {
         cpr::Response r = cpr::Post(cpr::Url{ "https://api.telegram.org/bot" + BOT_API + "/sendPhoto" },
             cpr::Multipart{ {"chat_id", CHAT_ID},
-                           {"photo", cpr::File{PhotoPath}} });
+                           {"photo", cpr::File{photo_path}} });
     }
 
-    bool SendFile(const std::string& FilePath) {
+    bool SendFile(const std::string& file_path) {
         cpr::Response r = cpr::Post(cpr::Url{ "https://api.telegram.org/bot" + BOT_API + "/sendDocument" },
             cpr::Multipart{ {"chat_id", CHAT_ID},
-                           {"document", cpr::File{FilePath}} });
+                           {"document", cpr::File{file_path}} });
         if (r.status_code != 200)
             return false;
         return true;
     }
 
-    json bad_json() {
+    json badJson() {
         json bad;
         bad["message_id"] = 69;
         bad["date"] = -1;
@@ -73,18 +73,16 @@ namespace telegram {
         auto response = cpr::Get(cpr::Url{ "https://api.telegram.org/bot" + BOT_API + "/getUpdates?last=1&offset=-1" });
         std::string& raw_response = response.text;
 
-        if (!raw_response.empty())
-            raw_response = raw_response.substr(21, raw_response.size() - 23);
-
         if (raw_response.empty() || raw_response == "\n")
-            return bad_json();
+            return badJson();
 
+        raw_response = raw_response.substr(21, raw_response.size() - 23);
 
         static bool error(false);
-        json LastMessage;
+        json last_message;
 
         try {
-            LastMessage = json::parse(raw_response);
+            last_message = json::parse(raw_response);
         }
         catch (json::parse_error& e) {
             std::cerr << "\n\n" << "message: " << e.what() << '\n'
@@ -96,9 +94,9 @@ namespace telegram {
             if (!error)
                 SendText(ID + " something went wrong with parsing to json");
             error = true;
-            return bad_json();
+            return badJson();
         }
         error = false;
-        return LastMessage["channel_post"];
+        return last_message["channel_post"];
     }
 }  // namespace telegram

@@ -5,7 +5,7 @@
 namespace parse {
 	struct ParsedMessage {
 		std::string ID;
-		std::string function;
+		std::string command;
 		std::string parameters;
 	};
 

