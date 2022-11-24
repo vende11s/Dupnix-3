@@ -1,4 +1,4 @@
- #pragma once
+#pragma once
 #include <string>
 
 void getStatus(std::string);

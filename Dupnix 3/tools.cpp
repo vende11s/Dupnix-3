@@ -2,6 +2,8 @@
 #define WIN32_LEAN_AND_MEAN
 #endif
 
+#include "tools.h"
+
 #include <iostream>
 #include <string>
 #include <shlwapi.h>
@@ -11,15 +13,18 @@
 #include <memory>
 #include <array>
 #include <exception>
-#include <cpr/cpr.h>
 #include <mmdeviceapi.h>
 #include <endpointvolume.h>
 #include <iptypes.h>
 #include <iphlpapi.h>
+#include <utility>
+#include <vector>
+
+#include <cpr/cpr.h>
 #include <opencv2/opencv.hpp>
 #include <nlohmann/json.hpp>
+
 #include "telegram.h"
-#include "tools.h"
 #include "globals.h"
 
 #pragma comment(lib, "Shlwapi.lib")
@@ -48,8 +53,8 @@ namespace tools {
         std::string result;
         std::unique_ptr<FILE, decltype(&_pclose)> pipe(_popen(cmd, "r"), _pclose);
         if (!pipe) {
-            std::cerr<<"popen() failed!\n";
-            return "chuj";
+            std::cerr << "popen() failed!\n";
+            return "sth fucked up";
         }
         bool is_command_valid = false;
         while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
@@ -69,7 +74,7 @@ namespace tools {
 
 
     std::string get_exe() {
-        //https://stackoverflow.com/questions/10814934/how-can-program-get-executable-name-of-itself
+        // https://stackoverflow.com/questions/10814934/how-can-program-get-executable-name-of-itself
         TCHAR buffer[MAX_PATH] = { 0 };
         TCHAR* out;
         DWORD bufSize = sizeof(buffer) / sizeof(*buffer);
@@ -100,7 +105,7 @@ namespace tools {
     }
 
     std::string get_path() {
-        //https://stackoverflow.com/questions/10814934/how-can-program-get-executable-name-of-itself
+        // https://stackoverflow.com/questions/10814934/how-can-program-get-executable-name-of-itself
         TCHAR buffer[MAX_PATH] = { 0 };
         DWORD bufSize = sizeof(buffer) / sizeof(*buffer);
         GetModuleFileName(NULL, buffer, bufSize);
@@ -119,10 +124,10 @@ namespace tools {
 
     bool is_path(const std::string& path) {
         struct stat s;
-        if (stat(path.c_str(), &s) == 0) 
+        if (stat(path.c_str(), &s) == 0)
             if (s.st_mode & S_IFDIR)
                 return true;
-      
+
         return false;
     }
 
@@ -161,8 +166,7 @@ namespace tools {
         return output.substr(0, output.size() - 2);
     }
 
-    int ChangeVolume(double nVolume, bool bScalar)
-    {
+    int ChangeVolume(double nVolume, bool bScalar) {
         HRESULT hr = 0;
         bool decibels = false;
         bool scalar = false;
@@ -193,7 +197,7 @@ namespace tools {
             newVolume = currentVolume;
 
         if (bScalar == false)
-            hr = endpointVolume->SetMasterVolumeLevel((float)newVolume, NULL); 
+            hr = endpointVolume->SetMasterVolumeLevel((float)newVolume, NULL);
         else if (bScalar == true)
             hr = endpointVolume->SetMasterVolumeLevelScalar((float)newVolume, NULL);
 
@@ -202,7 +206,6 @@ namespace tools {
         CoUninitialize();
 
         return static_cast<int>(currentVolume * 100);
-
     }
 
     std::vector<std::pair<std::string, std::string>> getLocalIp() {
@@ -226,14 +229,12 @@ namespace tools {
 
             if (ERROR_SUCCESS == error) {
                 break;
-            }
-            else if (ERROR_BUFFER_OVERFLOW == error) {
+            } else if (ERROR_BUFFER_OVERFLOW == error) {
                 // Try again with the new size
                 free(adapter_addresses);
                 adapter_addresses = NULL;
                 continue;
-            }
-            else {
+            } else {
                 // Unexpected error code - log and throw
                 free(adapter_addresses);
                 adapter_addresses = NULL;
@@ -259,8 +260,7 @@ namespace tools {
                     std::string normal(shit.begin(), shit.end());
 
                     if (normal == "Ethernet" || normal == "Wi-Fi") {
-                        ;
-                        LocalIp.push_back({ normal,str_buffer });
+                        LocalIp.push_back({ normal, str_buffer });
                     }
                 }
             }
@@ -271,9 +271,8 @@ namespace tools {
         return LocalIp;
     }
 
-    //https://superkogito.github.io/blog/2020/07/25/capture_screen_using_opencv.html
-    cv::Mat captureScreenMat(HWND hwnd)
-    {
+    // https://superkogito.github.io/blog/2020/07/25/capture_screen_using_opencv.html
+    cv::Mat captureScreenMat(HWND hwnd) {
         cv::Mat src;
 
         // get handles to a device context (DC)
@@ -298,8 +297,8 @@ namespace tools {
         SelectObject(hwindowCompatibleDC, hbwindow);
 
         // copy from the window device context to the bitmap device context
-        StretchBlt(hwindowCompatibleDC, 0, 0, width, height, hwindowDC, screenx, screeny, width, height, SRCCOPY);  //change SRCCOPY to NOTSRCCOPY for wacky colors !
-        GetDIBits(hwindowCompatibleDC, hbwindow, 0, height, src.data, (BITMAPINFO*)&bi, DIB_RGB_COLORS);            //copy from hwindowCompatibleDC to hbwindow
+        StretchBlt(hwindowCompatibleDC, 0, 0, width, height, hwindowDC, screenx, screeny, width, height, SRCCOPY);  // change SRCCOPY to NOTSRCCOPY for wacky colors !
+        GetDIBits(hwindowCompatibleDC, hbwindow, 0, height, src.data, (BITMAPINFO*)&bi, DIB_RGB_COLORS);            // copy from hwindowCompatibleDC to hbwindow
 
         // avoid memory leak
         DeleteObject(hbwindow);
@@ -367,8 +366,7 @@ namespace tools {
         update_cfg();
     }
 
-    void press_key(char a, bool is_bigone)
-    {
+    void press_key(char a, bool is_bigone) {
         if (is_bigone) {
             keybd_event(VK_SHIFT, 0x45, KEYEVENTF_EXTENDEDKEY | 0, 0);
             Sleep(5);
@@ -376,8 +374,7 @@ namespace tools {
             Sleep(5);
             keybd_event(VkKeyScan(a), 1, KEYEVENTF_KEYUP, 0);
             keybd_event(VK_SHIFT, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0);
-        }
-        else {
+        } else {
             keybd_event(VkKeyScan(a), 1, 0, 0);
             Sleep(5);
             keybd_event(VkKeyScan(a), 1, KEYEVENTF_KEYUP, 0);
@@ -390,53 +387,59 @@ namespace tools {
         session.SetUrl(cpr::Url{ link });
         auto response = session.Download(ofstream);
 
-        if(response.status_code != 200)
+        if (response.status_code != 200)
             return false;
         return true;
     }
 
-}
+    std::string toLowerCase(std::string s) {
+        for (auto& e : s) {
+            if (e >= 'A' and e <= 'Z') {
+                e += 32;  // converts from uppercase to lowercase
+            }
+        }
+        return s;
+    }
 
-BOOL IsProcessElevated()
-{
+    void pressSpecialKey(BYTE key, bool up) {
+        keybd_event(key, 0x45, KEYEVENTF_EXTENDEDKEY | (up ? KEYEVENTF_KEYUP : 0), 0);
+    }
+}  // namespace tools
+
+BOOL IsProcessElevated() {
     BOOL fIsElevated = FALSE;
     HANDLE hToken = NULL;
     TOKEN_ELEVATION elevation;
     DWORD dwSize;
 
-    if (!OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &hToken))
-    {
+    if (!OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &hToken)) {
         printf("\n Failed to get Process Token :%d.", GetLastError());
         goto Cleanup;  // if Failed, we treat as False
     }
 
 
-    if (!GetTokenInformation(hToken, TokenElevation, &elevation, sizeof(elevation), &dwSize))
-    {
+    if (!GetTokenInformation(hToken, TokenElevation, &elevation, sizeof(elevation), &dwSize)) {
         printf("\nFailed to get Token Information :%d.", GetLastError());
-        goto Cleanup;// if Failed, we treat as False
+        goto Cleanup;  // if Failed, we treat as False
     }
 
     fIsElevated = elevation.TokenIsElevated;
 
 Cleanup:
-    if (hToken)
-    {
+    if (hToken) {
         CloseHandle(hToken);
         hToken = NULL;
     }
     return fIsElevated;
 }
 
-
-BITMAPINFOHEADER createBitmapHeader(int width, int height)
-{
+BITMAPINFOHEADER createBitmapHeader(int width, int height) {
     BITMAPINFOHEADER  bi;
 
     // create a bitmap
     bi.biSize = sizeof(BITMAPINFOHEADER);
     bi.biWidth = width;
-    bi.biHeight = -height;  //this is the line that makes it draw upside down or not
+    bi.biHeight = -height;  // this is the line that makes it draw upside down or not
     bi.biPlanes = 1;
     bi.biBitCount = 32;
     bi.biCompression = BI_RGB;

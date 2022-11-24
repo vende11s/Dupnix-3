@@ -1,17 +1,21 @@
 #pragma once
 #ifdef _DEBUG
-#define DEBUG(x) std::cout<<"Debug value: "<<x<<std::endl;
+#define PRINT_DEBUG_VALUE(v) std::cout << "Debug value " << #v << " " << v << std::endl;
 #else
 #define DEBUG(x)
 #endif
 
 #include <string>
-#include <opencv2/opencv.hpp>
-#include <nlohmann/json.hpp>
+#include <utility>
+#include <vector>
 #include <Windows.h>
 
+#include <opencv2/opencv.hpp>
+#include <nlohmann/json.hpp>
+
+
 namespace tools {
-	//do something
+	// do something
 	std::string cmd_output(const char* cmd);
 	bool filexists(const std::string& name);
 	std::string random_string(int lenght);
@@ -20,8 +24,10 @@ namespace tools {
 	void change_cfg(nlohmann::json change);
 	void press_key(char a, bool is_bigone = 0);
 	bool DownloadFile(std::string link, std::string path);
+	std::string toLowerCase(std::string s);
+	void pressSpecialKey(BYTE key, bool up);
 
-	//get info
+	// get info
 	char GetSysDiskLetter();
 	std::string get_username();
 	std::string get_exe();
@@ -36,6 +42,6 @@ namespace tools {
 	bool is_path(const std::string& path);
 	bool remove(const std::string& to_remove);
 
-	//for screenshot function
+	// for screenshot function
 	cv::Mat captureScreenMat(HWND hwnd);
-}
+}  // namespace tools

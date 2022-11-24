@@ -79,10 +79,8 @@
     <None Include="..\commands.md">
       <Filter>Pliki zasobów</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="todo.txt">
+    <None Include="cpplint.py">
       <Filter>Pliki zasobów</Filter>
-    </Text>
+    </None>
   </ItemGroup>
 </Project>
