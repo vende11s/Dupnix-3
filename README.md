@@ -54,7 +54,7 @@ Dupnix communicates to you through telegram, so nobody can detect who's on the o
 ### [Commands](commands.md)
 
 ## Contribution
-If you wanna do something then - contribute, please text me before that (my discord is in my bio) so we can work together!
+If you wanna do something then go ahead, please text me before (my discord is in my bio).
 ## Why Dupnix 3?
 Why Dupnix 3 is called Dupnix 3? On one of cash machines in my town there is sign DUPNIX, that's all.
 
