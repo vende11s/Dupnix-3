@@ -362,3 +362,6 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /Dupnix 3/o.bat
+
+# Sensitive data
+*.json

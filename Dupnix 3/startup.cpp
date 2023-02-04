@@ -15,7 +15,7 @@
 using json = nlohmann::json;
 
 void printLogo() {
-	std::cout << "      _                   _      ____  " << std::endl
+	std::clog << "      _                   _      ____  " << std::endl
 		<< "     | |                 (_)    |___ \\ " << std::endl
 		<< "   __| |_   _ _ __  _ __  ___  __ __) |" << std::endl
 		<< "  / _` | | | | '_ \\| '_ \\| \\ \\/ /|__ < " << std::endl
@@ -26,7 +26,14 @@ void printLogo() {
 }
 
 void loadData() {
-	json data = tools::info::loadCfg();
+	json data;
+	
+	try {
+		 data = tools::info::loadCfg();
+	}
+	catch (...) {
+		data = DEFAULT_CONFIG;
+	}
 
 	try {
 		AUTOSTART = data["autostart"];
@@ -63,5 +70,5 @@ void startup() {
 	printLogo();
 
 	telegram::SendText(ID + " is running");
-	std::cout << "\nID: " + ID << std::endl;
+	std::clog << "\nID: " + ID << std::endl;
 }

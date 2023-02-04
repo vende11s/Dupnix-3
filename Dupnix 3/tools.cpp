@@ -341,7 +341,7 @@ namespace tools {
             data.merge_patch(change);
         }
         catch (...) {
-            std::cout << "couldn't change config file";
+            std::cerr << "couldn't change config file";
             telegram::SendText("couldn't change config file");
             return;
         }

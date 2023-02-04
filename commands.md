@@ -1,7 +1,8 @@
 ### Commands
+* *You dont need to care about upper/lowercase in commands names
 #### ALL_ID
 * Sends you id of all pc's you've got control on (the only command you don't use the `ID`)
-#### Function List
+#### FunctionList
 * Quick reminder of all functions (sends all names of functions)
 #### Status
 * Sends some useful stuff about pc
@@ -22,6 +23,8 @@ list_of_disks: C, D, E, F
 
 version: v0.1
 ```
+#### <ID>
+* Returns Status
 #### SetID <ID>
 * Changes ID
 #### Cmd <command>

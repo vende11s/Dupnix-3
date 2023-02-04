@@ -28,7 +28,7 @@ void autostart() {
     // if there's no key for autostart in registry yet, it adds one
     std::string s = "reg query HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run /f \"" + path + "" + tools::info::getExeName() + "\"";
     if (tools::info::cmdOutput(s.c_str()).find("End of search: 0 match(es) found.") != std::string::npos) {
-        std::cout << "Adding new key for autostart\n";
+        std::clog << "Adding new key for autostart\n";
         std::string cmd = "Reg Add  HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run /v " + tools::randomString(16) + " /t REG_SZ /d \"" + path + "/" + tools::info::getExeName() + "\"";
         system(cmd.c_str());
     }

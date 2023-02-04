@@ -29,7 +29,7 @@ int main() {
 		LastMessageId = message["message_id"].get<int>();
 
 		if (message["text"] == "ALL_ID") {
-			std::cout << "ALL_ID\n";
+			std::clog << "ALL_ID\n";
 			telegram::SendText(ID);
 			continue;
 		}

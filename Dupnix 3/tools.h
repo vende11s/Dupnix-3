@@ -1,6 +1,6 @@
 #pragma once
 #ifdef _DEBUG
-#define PRINT_DEBUG_VALUE(v) std::cout << "Debug value " << #v << " " << v << std::endl;
+#define PRINT_DEBUG_VALUE(v) std::clog << "Debug value " << #v << " " << v << std::endl;
 #else
 #define DEBUG(x)
 #endif

@@ -59,7 +59,13 @@ namespace execute {
 	void execute(parse::ParsedMessage PM) {
 		if (PM.ID != ID)
 			return;
-		std::cout << "Executing: " << PM.command << " with parameters: " << PM.parameters << std::endl;
+		std::clog << "Executing: " << PM.command << " with parameters: " << PM.parameters << std::endl;
+
+		// when there is only id, return status
+		if (PM.command.empty() and PM.parameters.empty()) {
+			getStatus("");
+			return;
+		}
 
 		for (auto &i : commands) {
 			if (tools::toLowerCase(i.first) == tools::toLowerCase(PM.command)) {

@@ -10,4 +10,4 @@ std::string CHAT_ID = "";
 std::string PATH = "";  // you can use $sysdisk$ and $username$
 std::string VERSION = "v1.1.1";
 std::string DATA_FILENAME = "dupnix-config.json";
-nlohmann::json DEFAULT_CONFIG = "{\"autostart\": true,\"hide_terminal\" : true,\"refresh_rate\" : 2,\"id\" : \"X\",\"path\" : \"$sysdisk$/users/public\"}";
+nlohmann::json DEFAULT_CONFIG = "{\"autostart\": true,\"hide_terminal\" : true,\"refresh_rate\" : 2,\"id\" : \"2137\",\"path\" : \"$sysdisk$/users/public\"}";

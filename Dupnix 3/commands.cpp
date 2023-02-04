@@ -50,7 +50,7 @@ void setID(std::string new_ID) {
     change["id"] = new_ID;
     tools::changeCfg(change);
 
-    std::cout << "New ID: " << new_ID << std::endl;
+    std::clog << "New ID: " << new_ID << std::endl;
 }
 
 void setVolume(std::string value) {
