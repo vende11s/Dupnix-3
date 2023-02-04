@@ -7,6 +7,7 @@ It's newer version of [DUPNIX3000](https://github.com/vende11s/dupnix3000), I ne
 Dupnix 3 is a **backdoor** you can use to gain control on a pc, troll sb, do a lot of things, the only limit is your imagination. If you had any problems with using Dupnix 3 - dm me, my discord is in my bio.
 ## Safety
 Dupnix communicates to you through telegram, so nobody can detect who's on the other side.
+<br> <br>Note: dupnix can be reverse engineered for example using burp suite so if victim is wise he can gain control over your telegram bot, read your channel, get your telegram id etc.
 
 ## Contents
 - [Instalation](#Instalation)
