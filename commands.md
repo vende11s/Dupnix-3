@@ -24,15 +24,15 @@ list_of_disks: C, D, E, F
 version: v0.1
 ```
 
-### ID
+### `<ID>`
 * Returns Status
-#### SetID <ID>
+#### SetID `<ID>`
 * Changes ID
-#### Cmd <command>
+#### Cmd `<command>`
 * just execute a cmd command
-#### CmdOutput <command>
+#### CmdOutput `<command>`
 * execute and get output of a cmd command
-#### Volume <>/<number>/<+number>/<-number>
+#### Volume `<>/<number>/<+number>/<-number>`
 * Parameters `empty` - just sends current Volume
 * `Number` in parameters - sets volume to this number
 * `+Number` in parameter - increases volume
@@ -45,24 +45,24 @@ version: v0.1
 * tunrs monitor on 
 #### CheckCfg
 * Sends you the config file
-#### ChangeCfg <json-syntax change>
+#### ChangeCfg `<json-syntax change>`
 * Changes value in config file, example
 ```
 <ID> ChangeCfg {"id": "2137"}
 ```
-#### SetCursor <x,y>
+#### SetCursor `<x,y>`
 * Sets cursor to given position
-#### Delay <seconds command parameters>
+#### Delay `<seconds command parameters>`
 * Performs a command with delay (you cannot perform any other command until this one is done)
-#### BlockCursor <seconds>
+#### BlockCursor `<seconds>`
 * Sets cursor to `0,0` for `<seconds>`
-#### BlockClipboard <true/false>
+#### BlockClipboard `<true/false>`
 * Blocks copying and pasting
 #### SendClipboard
 * if there is some text in clipboard, it sends it to u
-#### WriteToClipboard <text>
+#### WriteToClipboard `<text>`
 * Puts some text to clipboard
-#### Press <text>
+#### Press `<text>`
 * Works like BadUsb's STRING, just writes some text like it was user clicking keyboard
 example:
 `<ID> Press JDJD`
@@ -99,7 +99,7 @@ lmouse
 * Deletes Dupnix and all files
 #### ProcessList
 * Sends you list of all processes
-#### IsFileExists <path>
+#### IsFileExists `<path>`
 * says if given file exists 
 #### WebcamView
 * Sends you a screenshot from webcam
@@ -107,15 +107,15 @@ lmouse
 * makes a windows error sound 
 #### RunningApps
 * List of first-plan RunningApps 
-#### ListOfFiles <path>
+#### ListOfFiles `<path>`
 * works like a linux `ls` (here path is required)
 #### WifiList
 * sends you list of saved wifi and passwords to them
-#### CloseForeground <true/false>
+#### CloseForeground `<true/false>`
 * A troll that closes every window u click at
-#### DownloadFile <link>
+#### DownloadFile `<link>`
 * Downloads a file to dupnix directory
-#### SendFile <path>
+#### SendFile` <path>`
 * Sends u a file from given path
-#### UpdateDupnix <link>
+#### UpdateDupnix `<link>`
 * Replaces Dupnix executable with given executable from link eg. `https://github.com/vende11s/Dupnix-3/releases/download/v1.0/Dupnix-3.exe`
