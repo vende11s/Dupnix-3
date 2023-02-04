@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <set>
 
 #include <nlohmann/json.hpp>
 
@@ -15,3 +16,4 @@ extern  std::string PATH;  // you can use %sysdisk% and %username%
 extern  std::string DATA_FILENAME;
 extern  nlohmann::json DEFAULT_CONFIG;
 extern  std::string INSTANCE_ID;
+extern  std::set<char> DISK_LIST;

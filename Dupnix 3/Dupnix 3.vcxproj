@@ -149,6 +149,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="autostart.cpp" />
+    <ClCompile Include="diskchanges.cpp" />
     <ClCompile Include="globals.cpp" />
     <ClCompile Include="commands.cpp" />
     <ClCompile Include="main.cpp" />
@@ -160,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="autostart.h" />
+    <ClInclude Include="diskchanges.h" />
     <ClInclude Include="globals.h" />
     <ClInclude Include="execute.h" />
     <ClInclude Include="commands.h" />
