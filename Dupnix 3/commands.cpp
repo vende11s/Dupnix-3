@@ -37,6 +37,7 @@ void getStatus(std::string) {
     status += "current_volume: " + std::to_string(tools::ChangeVolume()) + '\n';
     status += "cursor_position: " + tools::info::getCursorPos() + '\n';
     status += "list_of_disks: " + tools::info::DiskList() + '\n';
+    status += "instance_id: " + INSTANCE_ID + '\n';
 
     status += "\nversion: " + VERSION + '\n';
 

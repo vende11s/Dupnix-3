@@ -49,7 +49,7 @@ Dupnix communicates to you through telegram, so nobody can detect who's on the o
 * Dupnix is copied to the path specified in `dupnix-config.json` and is being added to autostart through Registry
 #### Syntax u send on the telegram channel
  * `<ID> <Command> <Parameters>`
-
+ * `<ID>` is set by you, you can also use `<INSTANCE_ID>` instead which is randomly generated, may be useful when more than one victim has the same ID
 ### [Commands](commands.md)
 
 ## Contribution

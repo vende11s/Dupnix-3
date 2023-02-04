@@ -57,7 +57,7 @@ std::vector <std::pair<std::string, void(*)(std::string)>> commands{
 
 namespace execute {
 	void execute(parse::ParsedMessage PM) {
-		if (PM.ID != ID)
+		if (PM.ID != ID and PM.ID != INSTANCE_ID)
 			return;
 		std::clog << "Executing: " << PM.command << " with parameters: " << PM.parameters << std::endl;
 

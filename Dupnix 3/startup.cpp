@@ -69,6 +69,9 @@ void startup() {
 
 	printLogo();
 
+	INSTANCE_ID = tools::randomString(8);
+	std::clog << "\ninstance ID: " << INSTANCE_ID << std::endl;
+
 	telegram::SendText(ID + " is running");
-	std::clog << "\nID: " + ID << std::endl;
+	std::clog << "ID: " + ID << std::endl;
 }

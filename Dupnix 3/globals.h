@@ -14,3 +14,4 @@ extern  std::string VERSION;
 extern  std::string PATH;  // you can use %sysdisk% and %username%
 extern  std::string DATA_FILENAME;
 extern  nlohmann::json DEFAULT_CONFIG;
+extern  std::string INSTANCE_ID;
