@@ -421,7 +421,7 @@ void RunningApps(std::string) {
 }
 
 void ListOfFiles(std::string path) {
-    if (!tools::info::isPath(path)) {
+    if (!tools::info::isDir(path)) {
         telegram::SendText("Path doesn't exists or it's a file");
         return;
     }
@@ -547,6 +547,16 @@ void DownloadFile(std::string link) {
 }
 
 void SendFile(std::string path) {
+    if (tools::info::isDir(path)) {
+        telegram::SendText("it's a Directory");
+        return;
+    }
+
+    if (tools::info::filExists(path)) {
+        telegram::SendFile("file to send doesn't exists");
+        return;
+    }
+
     if (!telegram::SendFile(path))
         telegram::SendText("Couldn't send!");
 }

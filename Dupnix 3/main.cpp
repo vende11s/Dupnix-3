@@ -8,6 +8,7 @@
 #include "telegram.h"
 #include "parse.h"
 #include "execute.h"
+#include "tools.h"
 
 #pragma comment(lib, "Crypt32.lib")
 

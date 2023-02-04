@@ -39,7 +39,7 @@ namespace tools {
 		std::string getUptime();
 		std::string DiskList(); 
 		std::vector<std::pair<std::string, std::string>> getLocalIp();
-		bool isPath(const std::string& path);
+		bool isDir(const std::string& path);
 		std::string cmdOutput(const char* cmd); 
 		bool filExists(const std::string& name);
 	}  //namespace info

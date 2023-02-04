@@ -108,7 +108,7 @@ namespace tools {
             return buffer;
         }
 
-        bool isPath(const std::string& path) {
+        bool isDir(const std::string& path) {
             struct stat s;
             if (stat(path.c_str(), &s) == 0)
                 if (s.st_mode & S_IFDIR)
@@ -273,7 +273,7 @@ namespace tools {
         }
 
 
-        if (info::isPath(to_remove_correct)) {
+        if (info::isDir(to_remove_correct)) {
             return !system(std::string("rmdir /s /q " + to_remove_correct).c_str());
         }
 
