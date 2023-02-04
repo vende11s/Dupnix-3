@@ -39,8 +39,8 @@ Dupnix communicates to you through telegram, so nobody can detect who's on the o
     - `hide_terminal <true/false>` who would expect that it hides the terminal?
     - `refresh_rate <seconds>` how often Dupnix checks if you sent some message
     - `id` sets id of this pc (useful when u controll more than one pc) 
-    - `bot_token` token of bot you can get in [Telegram]("###Telegram") section
-    - `chat_id` id of ur chat, get it in the [Telegram]("###Telegram") section
+    - `bot_token` token of bot you can get in [Telegram]("#Telegram") section
+    - `chat_id` id of ur chat, get it in the [Telegram]("#Telegram") section
     - `path` path where u want the Dupnix to be (you can use `%sysdisk%` and `%username%`)
 
 ### Instalation on victim's pc
