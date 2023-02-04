@@ -117,5 +117,7 @@ lmouse
 * Downloads a file to dupnix directory
 #### SendFile` <path>`
 * Sends u a file from given path
+#### shell
+* Nothing more than just very simple shell
 #### UpdateDupnix `<link>`
 * Replaces Dupnix executable with given executable from link eg. `https://github.com/vende11s/Dupnix-3/releases/download/v1.0/Dupnix-3.exe`

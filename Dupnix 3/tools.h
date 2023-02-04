@@ -24,6 +24,7 @@ namespace tools {
 	std::string toLowerCase(std::string s);
 	void pressSpecialKey(BYTE key, bool up);
 	bool remove(const std::string& to_remove);
+	void CdToDefault();
 
 	// get info
 	namespace info {

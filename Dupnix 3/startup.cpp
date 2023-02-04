@@ -52,7 +52,7 @@ void loadData() {
 
 void startup() {
 	// cd to the folder dupnix is inside
-	std::filesystem::current_path(tools::info::getDupnixPath().substr(0, tools::info::getDupnixPath().size() - tools::info::getExeName().size()));
+	tools::CdToDefault();
 
 	try {
 		loadData();
