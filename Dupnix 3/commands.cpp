@@ -559,8 +559,8 @@ void SendFile(std::string path) {
         return;
     }
 
-    if (tools::info::filExists(path)) {
-        telegram::SendFile("file to send doesn't exists");
+    if (!tools::info::filExists(path)) {
+        telegram::SendText("file to send doesn't exist");
         return;
     }
 
