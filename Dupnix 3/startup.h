@@ -1,3 +1,3 @@
 #pragma once
 
-void startup();
+void startup(int argc, char** argv);

@@ -232,7 +232,7 @@ namespace tools {
 
         json loadCfg() {
             std::ifstream loaddata;
-            loaddata.open(DATA_FILENAME);
+            loaddata.open(CONFIG_FILENAME);
 
             if (!loaddata.good())
                 throw std::runtime_error("can't open config file!");
@@ -351,7 +351,7 @@ namespace tools {
         }
 
         std::ofstream write;
-        write.open(DATA_FILENAME);
+        write.open(CONFIG_FILENAME);
         write << data;
         write.close();
 

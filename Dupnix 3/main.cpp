@@ -15,8 +15,8 @@
 
 using json = nlohmann::json;
 
-int main() {
-	startup();
+int main(int argc, char **argv) {
+	startup(argc, argv);
 	int LastMessageId = -1;
 
 	while (true) {

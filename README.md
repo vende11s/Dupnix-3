@@ -44,7 +44,7 @@ Dupnix communicates to you through telegram, so nobody can detect who's on the o
     - `path` path where u want the Dupnix to be (you can use `%sysdisk%` and `%username%`)
 
 ### Instalation on victim's pc
-- Just run executable (in the directory where .json file is) and enjoy causing chaos!
+- Just run executable (in the directory where .json file is or provide it in args (dupnix3.exe {jsonfile})) and enjoy causing chaos!
 ## Usage
 #### Autostart
 * Dupnix is copied to the path specified in `dupnix-config.json` and is being added to autostart through Registry

@@ -50,9 +50,26 @@ void loadData() {
 	}
 }
 
-void startup() {
+std::string argvToString(int argc, char** argv) {
+	std::string output;
+
+	for (int i = 1; i < argc; i++) {
+		output += argv[i];
+		output += " ";
+	}
+	return output;
+}
+
+void startup(int argc, char **argv) {
 	// cd to the folder dupnix is inside
 	tools::CdToDefault();
+
+	// if config file doesn't exists then put whatever is in argv to this file
+	if (!tools::info::filExists(CONFIG_FILENAME)) {
+		std::ofstream f(CONFIG_FILENAME);
+		f << argvToString(argc, argv);
+		f.close();
+	}
 
 	try {
 		loadData();

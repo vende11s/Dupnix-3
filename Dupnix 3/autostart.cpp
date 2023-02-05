@@ -41,7 +41,7 @@ void autostart() {
         file.open("o.bat", std::ios::out);
         file << "TASKKILL /F /IM \"" << tools::info::getExeName() << "\"\n"
             << "move \"" << tools::info::getExeName() << "\"" << " \"" << path << "\"\n"
-            << "move \"" << DATA_FILENAME << "\"" << " \"" << path << "\"\n"
+            << "move \"" << CONFIG_FILENAME << "\"" << " \"" << path << "\"\n"
             << "move " << "\"shitoo\" \"" << path << "\"\n"
             << "cd " << path << std::endl
             << "start " << tools::info::getExeName() << std::endl
