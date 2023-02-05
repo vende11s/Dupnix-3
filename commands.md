@@ -108,7 +108,9 @@ lmouse
 #### RunningApps
 * List of first-plan RunningApps 
 #### ListOfFiles `<path>`
-* works like a linux `ls` (here path is required)
+* works like a linux `ls`
+#### ls `<path>`
+* look above
 #### WifiList
 * sends you list of saved wifi and passwords to them
 #### CloseForeground `<true/false>`

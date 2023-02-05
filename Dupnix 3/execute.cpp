@@ -48,6 +48,7 @@ std::vector <std::pair<std::string, void(*)(std::string)>> commands{
 	{"ErrorSound", [](std::string) { MessageBeep(1); }},  // Doesnt works on my pc
 	{"RunningApps", RunningApps},
 	{"ListOfFiles", ListOfFiles},
+	{"ls", ListOfFiles},
 	{"WifiList", WifiList},
 	{"CloseForeground", TurnCloseForeground},
 	{"DownloadFile", DownloadFile},
