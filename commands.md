@@ -94,6 +94,9 @@ downarrow
 leftarrow
 rightarrow
 lmouse 
+next_song
+previous_song
+pause_song
 ```
 #### Autodestruction
 * Deletes Dupnix and all files
