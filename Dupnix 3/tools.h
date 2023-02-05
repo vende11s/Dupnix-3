@@ -35,15 +35,15 @@ namespace tools {
 		std::string getHostname();
 		std::string getPublicIp();
 		bool checkAdminRights();  // to check if dupnix has admin rights
-		std::string getCursorPos(); 
-		std::string getDupnixPath(); 
+		std::string getCursorPos();
+		std::string getDupnixPath();
 		std::string getUptime();
-		std::string DiskList(); 
+		std::string DiskList();
 		std::vector<std::pair<std::string, std::string>> getLocalIp();
 		bool isDir(const std::string& path);
-		std::string cmdOutput(const char* cmd); 
+		std::string cmdOutput(const char* cmd);
 		bool filExists(const std::string& name);
-	}  //namespace info
+	}  // namespace info
 
 	// for screenshot function
 	cv::Mat captureScreenMat(HWND hwnd);

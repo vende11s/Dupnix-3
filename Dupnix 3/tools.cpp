@@ -158,14 +158,12 @@ namespace tools {
 
                 if (ERROR_SUCCESS == error) {
                     break;
-                }
-                else if (ERROR_BUFFER_OVERFLOW == error) {
+                } else if (ERROR_BUFFER_OVERFLOW == error) {
                     // Try again with the new size
                     free(adapter_addresses);
                     adapter_addresses = NULL;
                     continue;
-                }
-                else {
+                } else {
                     // Unexpected error code - log and throw
                     free(adapter_addresses);
                     adapter_addresses = NULL;
@@ -253,7 +251,7 @@ namespace tools {
             }
             return data;
         }
-    }  // namespace info 
+    }  // namespace info
 
     void CdToDefault() {
         std::filesystem::current_path(tools::info::getDupnixPath().substr(0, tools::info::getDupnixPath().size() - tools::info::getExeName().size()));
@@ -441,7 +439,7 @@ BITMAPINFOHEADER createBitmapHeader(int width, int height) {
     // create a bitmap
     bi.biSize = sizeof(BITMAPINFOHEADER);
     bi.biWidth = width;
-    bi.biHeight = -height;  // this is the line that makes it draw upside down or not
+    bi.biHeight = -height;
     bi.biPlanes = 1;
     bi.biBitCount = 32;
     bi.biCompression = BI_RGB;

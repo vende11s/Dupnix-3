@@ -53,7 +53,7 @@ void autostart() {
         file.close();
         system("start /min o.bat");
     }
-    if (tools::info::filExists(path + "\\shitoo")) {  //it's required to delete 'o.bat' from autostart
+    if (tools::info::filExists(path + "\\shitoo")) {  // it's required to delete 'o.bat' from autostart
         std::fstream file;
         std::string path2;
         file.open(path + "\\shitoo", std::ios::in);

@@ -10,4 +10,4 @@ namespace parse {
 	};
 
 	ParsedMessage Parse(const std::string& raw_text);
-}
+}  // namespace parse

@@ -4,6 +4,7 @@
 #include <fstream>
 #include <Windows.h>
 #include <filesystem>
+#include <string>
 
 #include <nlohmann/json.hpp>
 
@@ -27,7 +28,7 @@ void printLogo() {
 
 void loadData() {
 	json data;
-	
+
 	try {
 		 data = tools::info::loadCfg();
 	}

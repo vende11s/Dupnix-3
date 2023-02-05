@@ -1,8 +1,9 @@
+#include "diskchanges.h"
+
 #include <string>
 #include <set>
 #include <vector>
 
-#include "diskchanges.h"
 #include "globals.h"
 #include "tools.h"
 #include "telegram.h"
@@ -35,12 +36,11 @@ namespace diskchanges {
 
             if (disklist.size() > DISK_LIST.size()) {
                 telegram::SendText(ID + " New disks: " + diff_s);
-            }
-            else {
+            } else {
                 telegram::SendText(ID + " Removed disks: " + diff_s);
             }
 
             DISK_LIST = disklist;
         }
 	}
-}
+}  // namespace diskchanges

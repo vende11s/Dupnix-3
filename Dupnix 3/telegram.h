@@ -1,6 +1,7 @@
 #pragma once
-#include <nlohmann/json.hpp>
 #include <string>
+
+#include <nlohmann/json.hpp>
 
 namespace telegram {
 	void SendText(const std::string& send);
