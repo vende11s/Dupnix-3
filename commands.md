@@ -123,5 +123,7 @@ lmouse
 * Nothing more than just very simple shell
 #### cat `<path>`
 * Shows what's inside a file
+#### keylogger `<start/stop/sendLogs/clear>`
+* a keylogger
 #### UpdateDupnix `<link>`
 * Replaces Dupnix executable with given executable from link eg. `https://github.com/vende11s/Dupnix-3/releases/download/v1.0/Dupnix-3.exe`

