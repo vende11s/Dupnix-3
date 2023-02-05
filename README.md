@@ -44,7 +44,7 @@ Dupnix communicates to you through telegram, so nobody can detect who's on the o
     - `path` path where u want the Dupnix to be (you can use `%sysdisk%` and `%username%`)
 
 ### Instalation on victim's pc
-- Check dupnix-config.json (you can find it in relases)
+- Check dupnix-config.json (you can find it in releases)
 #### Method 1
 * run dupnix from cmd and put what's inside of config file as args (you need to put \ before quotes 'cause cmd for some reason is removing quotes)
 * `C:\> dupnix3.exe {\"autostart\":true,\"bot_token\":\"\"...}`
