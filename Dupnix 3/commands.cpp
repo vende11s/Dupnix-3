@@ -272,7 +272,7 @@ void hotkeys(std::string hotkey) {
             else if (buff == "lmouse") tools::pressSpecialKey(VK_LBUTTON, 0);
             else if (buff == "next_song") tools::pressSpecialKey(VK_MEDIA_NEXT_TRACK, 0);
             else if (buff == "previous_song") tools::pressSpecialKey(VK_MEDIA_PREV_TRACK, 0);
-            else if (buff == "pause_song") tools::pressSpecialKey(VK_MEDIA_PLAY_PAUSE, 0);
+            else if (buff == "pause_song") tools::pressSpecialKey(VK_LBUTTON, 0);
 
             buff.clear();
         }
@@ -527,15 +527,20 @@ void ChangeCfg(std::string change) {
 }
 
 void UpdateDupnix(std::string link) {
-    if (!tools::DownloadFile(link, "temp")) {
+    if (link.empty()) {
+        system(std::string("curl -L " + UPDATE_LINK + " -o temp").c_str());
+    } 
+    else if (!tools::DownloadFile(link, "temp")) {
         telegram::SendText("Can't Download!");
         return;
     }
+
     std::ofstream update("a.bat");
     update << "TASKKILL /F /IM \"" << tools::info::getExeName() << "\"\n"
         << "del /f \"" << tools::info::getExeName() << "\"\n"
         << "move temp \"" << tools::info::getExeName() << "\"\n"
         << "start " << tools::info::getExeName() << std::endl
+        << "del a.bat" << std::endl
         << "exit";
 
     update.close();

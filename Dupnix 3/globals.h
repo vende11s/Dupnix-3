@@ -17,3 +17,4 @@ extern  std::string CONFIG_FILENAME;
 extern  nlohmann::json DEFAULT_CONFIG;
 extern  std::string INSTANCE_ID;
 extern  std::set<char> DISK_LIST;
+extern	std::string UPDATE_LINK;

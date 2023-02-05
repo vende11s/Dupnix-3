@@ -372,12 +372,10 @@ namespace tools {
     }
 
     bool DownloadFile(std::string link, std::string path) {
-        auto ofstream = std::ofstream(path, std::ios::binary);
-        auto session = cpr::Session();
-        session.SetUrl(cpr::Url{ link });
-        auto response = session.Download(ofstream);
+        auto of = std::ofstream(path, std::ios::binary);
+        auto r = cpr::Download(of, cpr::Url{ link }, cpr::Redirect{69L});
 
-        if (response.status_code != 200)
+        if (r.status_code != 200)
             return false;
         return true;
     }
