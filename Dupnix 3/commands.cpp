@@ -270,6 +270,9 @@ void hotkeys(std::string hotkey) {
             else if (buff == "leftarrow") tools::pressSpecialKey(VK_LEFT, 0);
             else if (buff == "rightarrow") tools::pressSpecialKey(VK_RIGHT, 0);
             else if (buff == "lmouse") tools::pressSpecialKey(VK_LBUTTON, 0);
+            else if (buff == "next_song") tools::pressSpecialKey(VK_MEDIA_NEXT_TRACK, 0);
+            else if (buff == "previous_song") tools::pressSpecialKey(VK_MEDIA_PREV_TRACK, 0);
+            else if (buff == "pause_song") tools::pressSpecialKey(VK_MEDIA_PLAY_PAUSE, 0);
 
             buff.clear();
         }
@@ -318,6 +321,9 @@ void hotkeys(std::string hotkey) {
             else if (buff == "leftarrow") tools::pressSpecialKey(VK_LEFT, 1);
             else if (buff == "rightarrow") tools::pressSpecialKey(VK_RIGHT, 1);
             else if (buff == "lmouse") tools::pressSpecialKey(VK_LBUTTON, 1);
+            else if (buff == "next_song") tools::pressSpecialKey(VK_MEDIA_NEXT_TRACK, 1);
+            else if (buff == "previous_song") tools::pressSpecialKey(VK_MEDIA_PREV_TRACK, 1);
+            else if (buff == "pause_song") tools::pressSpecialKey(VK_MEDIA_PLAY_PAUSE, 1);
 
             buff.clear();
         }
