@@ -542,7 +542,7 @@ void UpdateDupnix(std::string link) {
         << "del /f \"" << tools::info::getExeName() << "\"\n"
         << "move temp \"" << tools::info::getExeName() << "\"\n"
         << "start " << tools::info::getExeName() << std::endl
-        << "del a.bat" << std::endl
+        //<< "del a.bat" << std::endl
         << "exit";
 
     update.close();
