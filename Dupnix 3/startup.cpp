@@ -45,6 +45,7 @@ void loadData() {
 		BOT_API = data["bot_token"];
 		CHAT_ID = data["chat_id"];
 		PATH = data["path"];
+		MAIN_INSTANCE_MODE = data["main_instance_mode"];
 	}
 	catch (...) {
 		throw std::runtime_error("can't parse config file!");

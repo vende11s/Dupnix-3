@@ -66,8 +66,9 @@ void cleanup() {
 
 namespace execute {
 	void execute(parse::ParsedMessage PM) {
-		if (PM.ID != ID and PM.ID != INSTANCE_ID)
-			return;
+		if(MAIN_INSTANCE_MODE == false)
+			if (PM.ID != ID and PM.ID != INSTANCE_ID)
+				return;
 		std::clog << "Executing: " << PM.command << " with parameters: " << PM.parameters << std::endl;
 
 		// when there is only id, return status

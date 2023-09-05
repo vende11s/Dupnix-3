@@ -51,6 +51,8 @@ Dupnix communicates to you through telegram, so nobody can detect who's on the o
 #### Method 2
 * create dupnix-config.json file in the same directory as exe and run it
 ## Usage
+#### Main instance
+* when `main_instance_mode` in config file is set to true, then ID is not needed anymore for this instance
 #### Autostart
 * Dupnix is copied to the path specified in `dupnix-config.json` and is being added to autostart through Registry
 #### Syntax

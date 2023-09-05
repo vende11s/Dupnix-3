@@ -8,6 +8,7 @@ extern  int REFRESH;  // in seconds
 extern  int TELEGRAM_MAX;
 extern  bool AUTOSTART;
 extern  bool HIDE_TERMINAL;
+extern  bool MAIN_INSTANCE_MODE;
 extern  std::string ID;
 extern  std::string BOT_API;
 extern  std::string CHAT_ID;
